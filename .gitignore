@@ -4,14 +4,19 @@
 .classpath
 .gradle
 .idea
+bin/
 *.iml
 *.iws
 *.ipr
+.vscode/
 **/resources/**/mxe
 
 # Pegasus & Avro
 **/src/mainGenerated*
 **/src/testGenerated*
+
+# Thrift
+**/src/generated/thrift
 
 # Added by mp-maker
 **/build
