@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "Uses",
+  "namespace": "com.linkedin.metadata.relationship",
+  "doc": "A generic model for the Has-A relationship",
+  "include": [
+    "BaseRelationship"
+  ],
+  "pairings": [
+    {
+      "source": "com.linkedin.common.urn.WorkflowUrn",
+      "destination": "com.linkedin.common.urn.DatasetUrn"
+    }
+  ],
+  "fields": [
+  ]
+}

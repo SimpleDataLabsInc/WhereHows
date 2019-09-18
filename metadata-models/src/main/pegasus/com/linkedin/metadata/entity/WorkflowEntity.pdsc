@@ -1,16 +1,16 @@
 {
   "type": "record",
-  "name": "DatasetEntity",
+  "name": "WorkflowEntity",
   "namespace": "com.linkedin.metadata.entity",
-  "doc": "Data model for a dataset entity",
+  "doc": "Data model for a Workflow entity",
   "include": [
     "BaseEntity"
   ],
   "fields": [
     {
       "name": "urn",
-      "type": "com.linkedin.common.DatasetUrn",
-      "doc": "Urn for the dataset"
+      "type": "com.linkedin.common.WorkflowUrn",
+      "doc": "Urn for the workflow"
     }
   ]
 }

@@ -17,12 +17,6 @@
       "type": "string",
       "doc": "Namespace of the dataset group",
       "optional": true
-    },
-    {
-      "name": "name",
-      "type": "string",
-      "doc": "Name of the dataset group",
-      "optional": true
     }
   ]
 }

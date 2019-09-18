@@ -5,7 +5,9 @@
   "doc": "A union of all supported relationship types.",
   "ref": [
     "Contains",
+    "Creates",
     "IsPartOf",
-    "OwnedBy"
+    "OwnedBy",
+    "Uses"
   ]
 }

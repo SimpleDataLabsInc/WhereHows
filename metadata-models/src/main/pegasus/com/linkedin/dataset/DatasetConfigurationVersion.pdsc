@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "name": "DatasetConfigurationVersion",
+  "namespace": "com.linkedin.dataset",
+  "doc": "Dataset Configuration version",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long",
+      "doc": "Version id"
+    },
+    {
+      "name": "commitId",
+      "type": "string",
+      "doc": "Commit id"
+    },
+    {
+      "name": "commitMessage",
+      "type": "string",
+      "doc": "Commit message"
+    }
+  ]
+}

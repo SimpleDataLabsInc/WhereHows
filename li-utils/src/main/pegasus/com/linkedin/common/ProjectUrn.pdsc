@@ -1,0 +1,8 @@
+{
+  "ref" : "string",
+  "name" : "ProjectUrn",
+  "namespace" : "com.linkedin.common",
+  "doc" : "Project's urn",
+  "type" : "typeref"
+  // todo: custom java class and validation skipped
+}

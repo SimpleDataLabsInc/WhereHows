@@ -1,0 +1,19 @@
+{
+  "name": "WorkflowKey",
+  "type": "record",
+  "namespace": "com.linkedin.workflow",
+  "doc": "Key for workflow resource",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of workflow",
+      "validate": {
+        "strlen": {
+          "min": 1,
+          "max": 20
+        }
+      }
+    }
+  ]
+}

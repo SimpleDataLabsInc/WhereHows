@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "name": "WorkflowVersion",
+  "namespace": "com.linkedin.workflow",
+  "doc": "Workflow version",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long",
+      "doc": "Version id"
+    },
+    {
+      "name": "commitId",
+      "type": "string",
+      "doc": "Commit id"
+    },
+    {
+      "name": "commitMessage",
+      "type": "string",
+      "doc": "Commit message"
+    }
+  ]
+}

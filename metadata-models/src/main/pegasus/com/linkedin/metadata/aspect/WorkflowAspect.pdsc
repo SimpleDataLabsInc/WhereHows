@@ -1,0 +1,11 @@
+{
+  "type": "typeref",
+  "name": "WorkflowAspect",
+  "namespace": "com.linkedin.metadata.aspect",
+  "doc": "A union of all supported metadata aspects for a Workflow",
+  "ref": [
+    "com.linkedin.workflow.WorkflowInfo",
+    "com.linkedin.workflow.WorkflowVersions",
+    "com.linkedin.common.Configurations"
+  ]
+}

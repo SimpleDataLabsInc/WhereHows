@@ -11,12 +11,6 @@
       "name": "urn",
       "type": "com.linkedin.common.CorpuserUrn",
       "doc": "Urn for the LDAP User"
-    },
-    {
-      "name": "name",
-      "type": "string",
-      "doc": "LDAP name(id) : e.g. hzhang2, ywang5 ..",
-      "optional": true
     }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "DatasetConfigurationVersions",
+  "namespace": "com.linkedin.dataset",
+  "doc": "Dataset Configuration versions",
+  "fields": [
+    {
+      "name": "version",
+      "type": {
+        "type": "array",
+        "items": "DatasetConfigurationVersion"
+      }
+    }
+  ]
+}

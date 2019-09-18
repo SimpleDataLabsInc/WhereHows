@@ -10,6 +10,11 @@
       "doc": "Whether the entity has been removed or not",
       "optional": true,
       "default": false
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of the entity"
     }
   ]
 }

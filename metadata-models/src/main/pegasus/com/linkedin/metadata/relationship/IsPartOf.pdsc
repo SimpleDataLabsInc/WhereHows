@@ -7,6 +7,10 @@
     "BaseRelationship"
   ],
   "pairings": [
+      {
+        "source": "com.linkedin.common.urn.CorpUserUrn",
+        "destination": "com.linkedin.common.urn.CorpGroupUrn"
+      }
   ],
   "fields": [
   ]

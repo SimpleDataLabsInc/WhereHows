@@ -1,0 +1,10 @@
+{
+  "type": "typeref",
+  "name": "ProjectAspect",
+  "namespace": "com.linkedin.metadata.aspect",
+  "doc": "A union of all supported metadata aspects for a Project",
+  "ref": [
+    "com.linkedin.project.ProjectInfo",
+    "com.linkedin.common.Configurations"
+  ]
+}

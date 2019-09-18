@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "name": "ProjectInfo",
+  "namespace": "com.linkedin.project",
+  "doc": "Project information",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of the project"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "doc": "Description of the project",
+      "optional": true
+    }
+  ]
+}

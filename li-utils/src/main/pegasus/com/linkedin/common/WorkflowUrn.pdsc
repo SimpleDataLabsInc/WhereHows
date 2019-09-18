@@ -1,0 +1,8 @@
+{
+  "ref" : "string",
+  "name" : "WorkflowUrn",
+  "namespace" : "com.linkedin.common",
+  "doc" : "Workflow's urn",
+  "type" : "typeref"
+  // todo: custom java class and validation skipped
+}

@@ -1,0 +1,19 @@
+{
+  "name": "ProjectKey",
+  "type": "record",
+  "namespace": "com.linkedin.project",
+  "doc": "Key for project resource",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of the project",
+      "validate": {
+        "strlen": {
+          "min": 1,
+          "max": 20
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "name": "WorkflowInfo",
+  "namespace": "com.linkedin.workflow",
+  "doc": "Workflow information",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of the workflow"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "doc": "Description of the workflow",
+      "optional": true
+    }
+  ]
+}

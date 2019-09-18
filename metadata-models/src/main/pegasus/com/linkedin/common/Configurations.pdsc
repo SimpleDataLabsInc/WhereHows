@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "Configurations",
+  "namespace": "com.linkedin.common",
+  "doc": "Configuration metadata aspect",
+  "fields": [
+    {
+      "name": "configurations",
+      "type": {
+        "type": "map",
+        "values": "string"
+      },
+      "doc": "A key-value map to capture any other non-standardized properties for the dataset",
+      "default": {}
+    }
+  ]
+}

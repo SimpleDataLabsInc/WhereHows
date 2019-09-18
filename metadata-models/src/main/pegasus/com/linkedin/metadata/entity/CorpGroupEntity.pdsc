@@ -11,12 +11,6 @@
       "name": "urn",
       "type": "com.linkedin.common.CorpGroupUrn",
       "doc": "Urn for the LDAP Group"
-    },
-    {
-      "name": "name",
-      "type": "string",
-      "doc": "name of the group, e.g. wherehows-dev, ask_metadata",
-      "optional": true
     }
   ]
 }

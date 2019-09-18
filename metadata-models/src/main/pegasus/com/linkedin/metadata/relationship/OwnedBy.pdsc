@@ -9,7 +9,15 @@
   "pairings": [
     {
       "source": "com.linkedin.common.urn.DatasetUrn",
-      "destination": "com.linkedin.common.urn.CorpuserUrn"
+      "destination": "com.linkedin.common.urn.ProjectUrn"
+    },
+    {
+      "source": "com.linkedin.common.urn.WorkflowUrn",
+      "destination": "com.linkedin.common.urn.ProjectUrn"
+    },
+    {
+      "source": "com.linkedin.common.urn.ProjectUrn",
+      "destination": "com.linkedin.common.urn.CorpGroupUrn"
     }
   ],
   "fields": [
