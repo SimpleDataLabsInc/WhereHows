@@ -1,6 +1,6 @@
 include 'datahub-dao'
+include 'datahub-thrift'
 include 'datahub-frontend'
-include 'datahub-web'
 include 'gms:api'
 include 'gms:client'
 include 'gms:factories'
