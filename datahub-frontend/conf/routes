@@ -43,5 +43,7 @@ POST          /api/*path                                                      co
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                                                   controllers.Assets.at(path="/public", file)
 
+GET           /metastore/:company/:project                                    controllers.MetastoreApplication.
+
 # Wildcard route accepts any routes and delegates to serveAsset which in turn serves the Ember client
 GET           /*path                                                          controllers.Application.index(path)
