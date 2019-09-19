@@ -62,7 +62,6 @@ public class MetastoreApplication extends Controller {
         ByteString body = request().body().asRaw().asBytes();
         String type = request().header("Content-Type").get();
         if (type.contentEquals("application/x-thrift")) {
-            processor.process()
             return ok("Done");
         } else {
             return badRequest("Content Not Thrift");
