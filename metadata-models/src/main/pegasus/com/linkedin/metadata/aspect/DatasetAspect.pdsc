@@ -4,8 +4,7 @@
   "namespace": "com.linkedin.metadata.aspect",
   "doc": "A union of all supported metadata aspects for a Dataset",
   "ref": [
-    "com.linkedin.common.Configurations",
-     "com.linkedin.dataset.DatasetConfigurationVersions",
+    "com.linkedin.dataset.DatasetProperties",
     "com.linkedin.dataset.DatasetDeprecation",
     "com.linkedin.dataset.UpstreamLineage",
     "com.linkedin.common.InstitutionalMemory",

@@ -9,7 +9,9 @@
       "type": {
         "type": "array",
         "items": "DatasetConfigurationVersion"
-      }
+      },
+      "default": [],
+      "optional": true
     }
   ]
 }
