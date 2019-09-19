@@ -11,13 +11,14 @@ dependencies {
 def basedir = ""
 
 compileThrift {
-	recurse true
+	recurse false
 
     includeDirs += file("${basedir}/include")
     includeDirs += file("${basedir}/..")
-	generator 'java:beans,hashcode,generated_annotations=undated', 'private-members'
+	generator 'java'
+//    :beans,hashcode,generated_annotations=undated', 'private-members'
     outputDir = file('src/generated/thrift')
 }
 sourceSets {
-    main.java.srcDirs += 'src/generated/thrift/gen-javabean'
+    main.java.srcDirs += 'src/generated/thrift/gen-java'
 }
