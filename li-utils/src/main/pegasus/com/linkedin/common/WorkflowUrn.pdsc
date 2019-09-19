@@ -1,8 +1,29 @@
 {
   "ref" : "string",
+  "java" : {
+    "class" : "com.linkedin.common.urn.WorkflowUrn",
+    "coercerClass": "com.linkedin.common.urn.WorkflowUrnCoercer"
+  },
   "name" : "WorkflowUrn",
   "namespace" : "com.linkedin.common",
-  "doc" : "Workflow's urn",
-  "type" : "typeref"
-  // todo: custom java class and validation skipped
+  "doc" : "Workflow URN",
+  "type" : "typeref",
+  "validate" : {
+    "com.linkedin.common.validator.TypedUrnValidator" : {
+      "accessible" : true,
+      "entityType" : "workflow",
+      "constructable" : true,
+      "name" : "Workflow",
+      "namespace" : "li",
+      "doc" : "Workflow Urn",
+      "owners" : "urn:li:corpgroup:fbar",
+      "fields" : [ {
+        "name" : "name",
+        "doc" : "Name of the workflow",
+        "type" : "string",
+        "maxLength" : 20
+      } ],
+      "maxLength" : 36
+    }
+  }
 }

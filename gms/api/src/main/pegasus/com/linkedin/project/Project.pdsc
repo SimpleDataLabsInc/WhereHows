@@ -1,0 +1,25 @@
+{
+  "type": "record",
+  "name": "Project",
+  "namespace": "com.linkedin.project",
+  "doc": "Metadata for a project",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of the project"
+    },
+    {
+      "name": "info",
+      "type": "com.linkedin.project.ProjectInfo",
+      "doc": "Information of the project",
+      "optional": true
+    },
+    {
+      "name": "configurations",
+      "type": "com.linkedin.common.Configurations",
+      "doc": "Editable information of the corp user",
+      "optional": true
+    }
+  ]
+}

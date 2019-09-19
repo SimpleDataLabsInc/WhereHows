@@ -1,0 +1,31 @@
+{
+  "type": "record",
+  "name": "Workflow",
+  "namespace": "com.linkedin.workflow",
+  "doc": "Metadata for a workflow",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of the workflow"
+    },
+    {
+      "name": "info",
+      "type": "com.linkedin.workflow.WorkflowInfo",
+      "doc": "Information of the workflow",
+      "optional": true
+    },
+    {
+      "name": "configurations",
+      "type": "com.linkedin.common.Configurations",
+      "doc": "Editable information of the corp user",
+      "optional": true
+    },
+    {
+      "name": "versions",
+      "type": "com.linkedin.workflow.WorkflowVersions",
+      "doc": "Editable information of the corp user",
+      "optional": true
+    }
+  ]
+}

@@ -1,8 +1,29 @@
 {
   "ref" : "string",
+  "java" : {
+    "class" : "com.linkedin.common.urn.ProjectUrn",
+    "coercerClass": "com.linkedin.common.urn.ProjectUrnCoercer"
+  },
   "name" : "ProjectUrn",
   "namespace" : "com.linkedin.common",
-  "doc" : "Project's urn",
-  "type" : "typeref"
-  // todo: custom java class and validation skipped
+  "doc" : "Project URN",
+  "type" : "typeref",
+  "validate" : {
+    "com.linkedin.common.validator.TypedUrnValidator" : {
+      "accessible" : true,
+      "entityType" : "project",
+      "constructable" : true,
+      "name" : "Project",
+      "namespace" : "li",
+      "doc" : "Project Urn",
+      "owners" : [ "urn:li:corpuser:fbar", "urn:li:corpuser:bfoo" ],
+      "fields" : [ {
+        "name" : "name",
+        "doc" : "Name of the project",
+        "type" : "string",
+        "maxLength" : 20
+      } ],
+      "maxLength" : 36
+    }
+  }
 }
