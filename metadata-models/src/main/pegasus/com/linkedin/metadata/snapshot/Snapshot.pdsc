@@ -5,6 +5,9 @@
   "doc": "A union of all supported metadata snapshot types.",
   "ref": [
     "CorpUserSnapshot",
-    "DatasetSnapshot"
+    "DatasetSnapshot",
+    "CorpGroupSnapshot",
+    "ProjectSnapshot",
+    "WorkflowSnapshot"
   ]
 }

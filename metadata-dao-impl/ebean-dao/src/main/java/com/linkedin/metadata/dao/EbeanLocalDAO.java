@@ -67,47 +67,47 @@ public class EbeanLocalDAO<ASPECT_UNION extends UnionTemplate, URN extends Urn>
     _server = server;
   }
 
-  /**
-   * Creates a private in-memory {@link EbeanServer} based on H2 for production.
-   */
-  @Nonnull
-  public static ServerConfig createProductionH2ServerConfig(@Nonnull String dbName) {
-
-    DataSourceConfig dataSourceConfig = new DataSourceConfig();
-    dataSourceConfig.setUsername("tester");
-    dataSourceConfig.setPassword("");
-    String url = "jdbc:h2:mem:" + dbName + ";IGNORECASE=TRUE;DB_CLOSE_DELAY=-1;";
-    dataSourceConfig.setUrl(url);
-    dataSourceConfig.setDriver("org.h2.Driver");
-
-    ServerConfig serverConfig = new ServerConfig();
-    serverConfig.setName(dbName);
-    serverConfig.setDataSourceConfig(dataSourceConfig);
-    serverConfig.setDdlGenerate(false);
-    serverConfig.setDdlRun(false);
-
-    return serverConfig;
-  }
-
-  /**
-   * Creates a private in-memory {@link EbeanServer} based on H2 for testing purpose.
-   */
-  @Nonnull
-  public static ServerConfig createTestingH2ServerConfig() {
-    DataSourceConfig dataSourceConfig = new DataSourceConfig();
-    dataSourceConfig.setUsername("tester");
-    dataSourceConfig.setPassword("");
-    dataSourceConfig.setUrl("jdbc:h2:mem:;IGNORECASE=TRUE;");
-    dataSourceConfig.setDriver("org.h2.Driver");
-
-    ServerConfig serverConfig = new ServerConfig();
-    serverConfig.setName("gma");
-    serverConfig.setDataSourceConfig(dataSourceConfig);
-    serverConfig.setDdlGenerate(true);
-    serverConfig.setDdlRun(true);
-
-    return serverConfig;
-  }
+//  /**
+//   * Creates a private in-memory {@link EbeanServer} based on H2 for production.
+//   */
+//  @Nonnull
+//  public static ServerConfig createProductionH2ServerConfig(@Nonnull String dbName) {
+//
+//    DataSourceConfig dataSourceConfig = new DataSourceConfig();
+//    dataSourceConfig.setUsername("tester");
+//    dataSourceConfig.setPassword("");
+//    String url = "jdbc:h2:mem:" + dbName + ";IGNORECASE=TRUE;DB_CLOSE_DELAY=-1;";
+//    dataSourceConfig.setUrl(url);
+//    dataSourceConfig.setDriver("org.h2.Driver");
+//
+//    ServerConfig serverConfig = new ServerConfig();
+//    serverConfig.setName(dbName);
+//    serverConfig.setDataSourceConfig(dataSourceConfig);
+//    serverConfig.setDdlGenerate(false);
+//    serverConfig.setDdlRun(false);
+//
+//    return serverConfig;
+//  }
+//
+//  /**
+//   * Creates a private in-memory {@link EbeanServer} based on H2 for testing purpose.
+//   */
+//  @Nonnull
+//  public static ServerConfig createTestingH2ServerConfig() {
+//    DataSourceConfig dataSourceConfig = new DataSourceConfig();
+//    dataSourceConfig.setUsername("tester");
+//    dataSourceConfig.setPassword("");
+//    dataSourceConfig.setUrl("jdbc:h2:mem:;IGNORECASE=TRUE;");
+//    dataSourceConfig.setDriver("org.h2.Driver");
+//
+//    ServerConfig serverConfig = new ServerConfig();
+//    serverConfig.setName("gma");
+//    serverConfig.setDataSourceConfig(dataSourceConfig);
+//    serverConfig.setDdlGenerate(true);
+//    serverConfig.setDdlRun(true);
+//
+//    return serverConfig;
+//  }
 
   @Override
   protected <T> T runInTransactionWithRetry(@Nonnull Supplier<T> block, int maxTransactionRetry) {
