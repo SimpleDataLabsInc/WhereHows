@@ -1,27 +1,38 @@
-package hive.metastore;
+package hive.metastore.sdl;
+
 import com.facebook.fb303.fb_status;
+import com.linkedin.metadata.dao.BaseLocalDAO;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.hive.metastore.api.*;
 import org.apache.thrift.TException;
-import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.protocol.TProtocol;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class HiveMetastoreImpl implements ThriftHiveMetastore.Iface {
+    private final BaseLocalDAO _localDAO;
+
+    public HiveMetastoreImpl(BaseLocalDAO _localDao) {//}, MetastoreDao _metastoreDao) {
+        this._localDAO = _localDao;
+    }
+
     @Override
     public String getMetaConf(String key) throws MetaException, TException {
+        log.info("Looking for {}", key);
         return null;
     }
 
     @Override
     public void setMetaConf(String key, String value) throws MetaException, TException {
-
+        log.info("Setting for {} -> {}", key, value);
     }
 
     @Override
     public void create_catalog(CreateCatalogRequest catalog) throws AlreadyExistsException, InvalidObjectException, MetaException, TException {
-
+        log.info("CreateCatalog, {}", catalog);
     }
 
     @Override
@@ -1056,7 +1067,7 @@ public class HiveMetastoreImpl implements ThriftHiveMetastore.Iface {
 
     @Override
     public fb_status getStatus() throws TException {
-        return null;
+        return fb_status.ALIVE;
     }
 
     @Override
@@ -1101,11 +1112,11 @@ public class HiveMetastoreImpl implements ThriftHiveMetastore.Iface {
 
     @Override
     public void reinitialize() throws TException {
-
+        //ignore
     }
 
     @Override
     public void shutdown() throws TException {
-
+        //ignore
     }
 }

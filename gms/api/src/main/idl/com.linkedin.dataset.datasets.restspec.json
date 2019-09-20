@@ -126,6 +126,27 @@
           }
         }
       }, {
+        "name" : "hiveMetastore",
+        "namespace" : "com.linkedin.dataset",
+        "path" : "/datasets/{dataset}/hiveMetastore",
+        "schema" : "hive.metastore.sdl.HiveMetastore",
+        "doc" : "Rest.li entry point: /datasets/{datasetKey}/hiveMetastore\n\ngenerated from: com.linkedin.dataset.rest.resources.HiveMetastoreResource",
+        "collection" : {
+          "identifier" : {
+            "name" : "hiveMetastoreId",
+            "type" : "long"
+          },
+          "supports" : [ "create", "get" ],
+          "methods" : [ {
+            "method" : "create"
+          }, {
+            "method" : "get"
+          } ],
+          "entity" : {
+            "path" : "/datasets/{dataset}/hiveMetastore/{hiveMetastoreId}"
+          }
+        }
+      }, {
         "name" : "institutionalMemory",
         "namespace" : "com.linkedin.dataset",
         "path" : "/datasets/{dataset}/institutionalMemory",

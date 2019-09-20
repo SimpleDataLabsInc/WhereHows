@@ -22,6 +22,21 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+
+  <!-- Start: Servlet for starting thrift over http protocol -->
+  <servlet>
+    <servlet-name>HiveMetastoreServlet</servlet-name>
+    <servlet-class>hive.web.sdl.HiveMetastoreServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HiveMetastoreServlet</servlet-name>
+    <url-pattern>/thrift</url-pattern>
+  </servlet-mapping>
+
 
   <!-- servlet definitions -->
   <!--

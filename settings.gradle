@@ -1,6 +1,7 @@
 include 'datahub-dao'
-include 'datahub-thrift'
+include 'thrift-metastore'
 include 'datahub-frontend'
+include 'gms:thrift'
 include 'gms:api'
 include 'gms:client'
 include 'gms:factories'

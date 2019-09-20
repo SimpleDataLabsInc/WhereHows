@@ -1,0 +1,16 @@
+apply plugin: 'java'
+
+dependencies {
+    compile project(":metadata-dao")
+    compile project(":gms:factories")
+    compile project(":thrift-metastore")
+    compile project(':gms:api')
+    compile project(path: ':gms:api', configuration: 'dataTemplate')
+    compile project(':li-utils')
+    compile project(':metadata-models')
+    compile project(':metadata-dao-impl:ebean-dao')
+    compile project(':metadata-dao-impl:elasticsearch-dao')
+    compile project(':metadata-test-utils')
+
+    compileOnly externalDependency.lombok
+}

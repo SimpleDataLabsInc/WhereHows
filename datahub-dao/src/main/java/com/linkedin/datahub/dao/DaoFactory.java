@@ -1,9 +1,6 @@
 package com.linkedin.datahub.dao;
 
-import com.linkedin.datahub.dao.table.DatasetOwnerDao;
-import com.linkedin.datahub.dao.table.DatasetsDao;
-import com.linkedin.datahub.dao.table.GmsDao;
-import com.linkedin.datahub.dao.table.LineageDao;
+import com.linkedin.datahub.dao.table.*;
 import com.linkedin.datahub.dao.view.*;
 import com.linkedin.util.Configuration;
 
@@ -23,6 +20,7 @@ public class DaoFactory {
   private static DatasetOwnerDao datasetOwnerDao;
   private static DatasetsDao datasetsDao;
   private static LineageDao lineageDao;
+  private static MetastoreDao metastoreDao;
 
   public DaoFactory() {
   }
@@ -83,6 +81,13 @@ public class DaoFactory {
       datasetsDao = new DatasetsDao(getGmsDao().get_ownerships());
     }
     return datasetsDao;
+  }
+
+  public static MetastoreDao getMetastoreDao() {
+    if (metastoreDao == null) {
+      metastoreDao = new MetastoreDao(getGmsDao().get_metastores(), getGmsDao().get_datasets());
+    }
+    return metastoreDao;
   }
 
   public static LineageDao getLineageDao() {

@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "HiveMetastore",
+  "namespace": "hive.metastore.sdl",
+  "doc": "Metastore corresponding to a record of Hive Metastore.",
+  "fields": [
+    {
+      "name": "description",
+      "type": "string",
+      "doc": "Description of the link."
+    }
+  ]
+}

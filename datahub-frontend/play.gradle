@@ -15,7 +15,6 @@ configurations {
 dependencies {
 //  assets project(path: ':datahub-web', configuration: 'assets')
 
-  play project(":datahub-thrift")
   play project(":datahub-dao")
 
   play externalDependency.jerseyCore

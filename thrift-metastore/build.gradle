@@ -6,6 +6,7 @@ dependencies {
     compile "org.apache.thrift:libfb303:0.9.3"
     compile "org.apache.hadoop:hadoop-annotations:3.1.0"
     compile "org.apache.hadoop:hadoop-common:3.1.0"
+    compile project(":metadata-dao")
 }
 
 def basedir = ""
@@ -15,8 +16,7 @@ compileThrift {
 
     includeDirs += file("${basedir}/include")
     includeDirs += file("${basedir}/..")
-	generator 'java'
-//    :beans,hashcode,generated_annotations=undated', 'private-members'
+	generator 'java:hashcode,generated_annotations=undated', 'private-members'
     outputDir = file('src/generated/thrift')
 }
 sourceSets {
