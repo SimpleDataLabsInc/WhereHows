@@ -82,18 +82,18 @@ public abstract class BaseVersionedAspectResource<URN extends Urn, ASPECT_UNION 
     });
   }
 
-  @RestMethod.GetAll
-  @Nonnull
-  public Task<CollectionResult<ASPECT, ListResultMetadata>> getAllWithMetadata(
-      @PagingContextParam @Nonnull PagingContext pagingContext) {
-    return RestliUtils.toTask(() -> {
-      final URN urn = getUrn(getContext().getPathKeys());
-
-      final ListResult<ASPECT> listResult =
-          getLocalDAO().list(_aspectClass, urn, pagingContext.getStart(), pagingContext.getCount());
-      return new CollectionResult<ASPECT, ListResultMetadata>(listResult.getValues(), listResult.getMetadata());
-    });
-  }
+//  @RestMethod.GetAll
+//  @Nonnull
+//  public Task<CollectionResult<ASPECT, ListResultMetadata>> getAllWithMetadata(
+//      @PagingContextParam @Nonnull PagingContext pagingContext) {
+//    return RestliUtils.toTask(() -> {
+//      final URN urn = getUrn(getContext().getPathKeys());
+//
+//      final ListResult<ASPECT> listResult =
+//          getLocalDAO().list(_aspectClass, urn, pagingContext.getStart(), pagingContext.getCount());
+//      return new CollectionResult<ASPECT, ListResultMetadata>(listResult.getValues(), listResult.getMetadata());
+//    });
+//  }
 
   @RestMethod.Create
   @Override

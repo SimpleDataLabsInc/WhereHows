@@ -144,27 +144,27 @@ public abstract class BaseSnapshotResource<
     });
   }
 
-  /**
-   * Performs an MetadataAuditEvent backfill for an entity.
-   *
-   * @param aspectNames a list of FQCN for aspects for which a backfill MAE should be emitted
-   * @return a snapshot that includes the aspects for which a backfill MAE has been emitted
-   */
-  @Action(name = BACKFILL_ACTION_NAME)
-  public Task<SNAPSHOT> backfill(@ActionParam(ASPECT_NAMES_PARAM_NAME) @Nonnull String[] aspectNames) {
-    return RestliUtils.toTask(() -> {
-      final URN urn = getUrn(getContext().getPathKeys());
-
-      final List<UnionTemplate> aspects = Arrays.asList(aspectNames)
-          .stream()
-          .map(aspectName -> ModelUtils.getAspectClass(aspectName))
-          .map(type -> getLocalDAO().backfill(type, urn))
-          .filter(optionalMetadata -> optionalMetadata.isPresent())
-          .map(optionalMetadata -> ModelUtils.newAspectUnion(_aspectUnionClass, optionalMetadata.get()))
-          .collect(Collectors.toList());
-      return ModelUtils.newSnapshot(_snapshotClass, urn, aspects);
-    });
-  }
+//  /**
+//   * Performs an MetadataAuditEvent backfill for an entity.
+//   *
+//   * @param aspectNames a list of FQCN for aspects for which a backfill MAE should be emitted
+//   * @return a snapshot that includes the aspects for which a backfill MAE has been emitted
+//   */
+//  @Action(name = BACKFILL_ACTION_NAME)
+//  public Task<SNAPSHOT> backfill(@ActionParam(ASPECT_NAMES_PARAM_NAME) @Nonnull String[] aspectNames) {
+//    return RestliUtils.toTask(() -> {
+//      final URN urn = getUrn(getContext().getPathKeys());
+//
+//      final List<UnionTemplate> aspects = Arrays.asList(aspectNames)
+//          .stream()
+//          .map(aspectName -> ModelUtils.getAspectClass(aspectName))
+//          .map(type -> getLocalDAO().backfill(type, urn))
+//          .filter(optionalMetadata -> optionalMetadata.isPresent())
+//          .map(optionalMetadata -> ModelUtils.newAspectUnion(_aspectUnionClass, optionalMetadata.get()))
+//          .collect(Collectors.toList());
+//      return ModelUtils.newSnapshot(_snapshotClass, urn, aspects);
+//    });
+//  }
 
   @Nonnull
   private List<UnionTemplate> get(@Nonnull URN urn, @Nonnull List<AspectVersion> aspectVersions) {

@@ -62,10 +62,10 @@ public class DatasetsSnapshot extends BaseSnapshotResource<DatasetUrn, DatasetSn
         return new DatasetUrn(key.getPlatform(), key.getName(), key.getOrigin());
     }
 
-    @Action(name = BACKFILL_ACTION_NAME)
-    @Override
-    @Nonnull
-    public Task<DatasetSnapshot> backfill(@ActionParam(ASPECT_NAMES_PARAM_NAME) @Nonnull String[] aspectNames) {
-        return super.backfill(aspectNames);
-    }
+//    @Action(name = BACKFILL_ACTION_NAME)
+//    @Override
+//    @Nonnull
+//    public Task<DatasetSnapshot> backfill(@ActionParam(ASPECT_NAMES_PARAM_NAME) @Nonnull String[] aspectNames) {
+//        return super.backfill(aspectNames);
+//    }
 }

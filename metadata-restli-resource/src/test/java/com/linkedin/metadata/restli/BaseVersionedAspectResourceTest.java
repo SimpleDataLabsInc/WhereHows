@@ -84,22 +84,22 @@ public class BaseVersionedAspectResourceTest extends BaseEngineTest {
     assertEquals(result, foo);
   }
 
-  @Test
-  public void testGetAllWithMetadata() {
-    List<AspectFoo> foos = ImmutableList.of(new AspectFoo().setValue("v1"), new AspectFoo().setValue("v2"));
-    ExtraInfo extraInfo1 = makeExtraInfo(ENTITY_URN, 1L, makeAuditStamp("bar"));
-    ExtraInfo extraInfo2 = makeExtraInfo(ENTITY_URN, 2L, makeAuditStamp("baz"));
-    ListResultMetadata listResultMetadata =
-        new ListResultMetadata().setExtraInfos(new ExtraInfoArray(ImmutableList.of(extraInfo1, extraInfo2)));
-    ListResult listResult = ListResult.<AspectFoo>builder().values(foos).metadata(listResultMetadata).build();
-    when(_mockLocalDAO.list(AspectFoo.class, ENTITY_URN, 1, 2)).thenReturn(listResult);
-
-    CollectionResult<AspectFoo, ListResultMetadata> collectionResult =
-        runAndWait(_resource.getAllWithMetadata(new PagingContext(1, 2)));
-
-    assertEquals(collectionResult.getElements(), foos);
-    assertEquals(collectionResult.getMetadata(), listResultMetadata);
-  }
+//  @Test
+//  public void testGetAllWithMetadata() {
+//    List<AspectFoo> foos = ImmutableList.of(new AspectFoo().setValue("v1"), new AspectFoo().setValue("v2"));
+//    ExtraInfo extraInfo1 = makeExtraInfo(ENTITY_URN, 1L, makeAuditStamp("bar"));
+//    ExtraInfo extraInfo2 = makeExtraInfo(ENTITY_URN, 2L, makeAuditStamp("baz"));
+//    ListResultMetadata listResultMetadata =
+//        new ListResultMetadata().setExtraInfos(new ExtraInfoArray(ImmutableList.of(extraInfo1, extraInfo2)));
+//    ListResult listResult = ListResult.<AspectFoo>builder().values(foos).metadata(listResultMetadata).build();
+//    when(_mockLocalDAO.list(AspectFoo.class, ENTITY_URN, 1, 2)).thenReturn(listResult);
+//
+//    CollectionResult<AspectFoo, ListResultMetadata> collectionResult =
+//        runAndWait(_resource.getAllWithMetadata(new PagingContext(1, 2)));
+//
+//    assertEquals(collectionResult.getElements(), foos);
+//    assertEquals(collectionResult.getMetadata(), listResultMetadata);
+//  }
 
   private ExtraInfo makeExtraInfo(Urn urn, Long version, AuditStamp audit) {
     return new ExtraInfo().setUrn(urn).setVersion(version).setAudit(audit);

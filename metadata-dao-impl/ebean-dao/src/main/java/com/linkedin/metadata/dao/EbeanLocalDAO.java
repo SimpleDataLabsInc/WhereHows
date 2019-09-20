@@ -185,29 +185,29 @@ public class EbeanLocalDAO<ASPECT_UNION extends UnionTemplate, URN extends Urn>
     return result.isEmpty() ? 0 : result.get(0).getVersion() + 1L;
   }
 
-  @Override
-  protected <ASPECT extends RecordTemplate> void applyVersionBasedRetention(@Nonnull Class<ASPECT> aspectClass,
-      @Nonnull URN urn, @Nonnull VersionBasedRetention retention, long largestVersion) {
-    _server.find(EbeanMetadataAspect.class)
-        .where()
-        .eq(URN_COLUMN, urn.toString())
-        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
-        .ne(VERSION_COLUMN, LATEST_VERSION)
-        .le(VERSION_COLUMN, largestVersion - retention.getMaxVersionsToRetain() + 1)
-        .delete();
-  }
-
-  @Override
-  protected <ASPECT extends RecordTemplate> void applyTimeBasedRetention(@Nonnull Class<ASPECT> aspectClass,
-      @Nonnull URN urn, @Nonnull TimeBasedRetention retention, long currentTime) {
-
-    _server.find(EbeanMetadataAspect.class)
-        .where()
-        .eq(URN_COLUMN, urn.toString())
-        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
-        .lt(CREATED_ON_COLUMN, new Timestamp(currentTime - retention.getMaxAgeToRetain()))
-        .delete();
-  }
+//  @Override
+//  protected <ASPECT extends RecordTemplate> void applyVersionBasedRetention(@Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull URN urn, @Nonnull VersionBasedRetention retention, long largestVersion) {
+//    _server.find(EbeanMetadataAspect.class)
+//        .where()
+//        .eq(URN_COLUMN, urn.toString())
+//        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
+//        .ne(VERSION_COLUMN, LATEST_VERSION)
+//        .le(VERSION_COLUMN, largestVersion - retention.getMaxVersionsToRetain() + 1)
+//        .delete();
+//  }
+//
+//  @Override
+//  protected <ASPECT extends RecordTemplate> void applyTimeBasedRetention(@Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull URN urn, @Nonnull TimeBasedRetention retention, long currentTime) {
+//
+//    _server.find(EbeanMetadataAspect.class)
+//        .where()
+//        .eq(URN_COLUMN, urn.toString())
+//        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
+//        .lt(CREATED_ON_COLUMN, new Timestamp(currentTime - retention.getMaxAgeToRetain()))
+//        .delete();
+//  }
 
   @Override
   @Nonnull
@@ -253,115 +253,115 @@ public class EbeanLocalDAO<ASPECT_UNION extends UnionTemplate, URN extends Urn>
         && ModelUtils.getAspectName(aspectKey.getAspectClass()).equals(pk.getAspect());
   }
 
-  @Override
-  @Nonnull
-  public <ASPECT extends RecordTemplate> ListResult<Long> listVersions(@Nonnull Class<ASPECT> aspectClass,
-      @Nonnull URN urn, int start, int pageSize) {
-
-    checkValidAspect(aspectClass);
-
-    final PagedList<EbeanMetadataAspect> pagedList = _server.find(EbeanMetadataAspect.class)
-        .select(KEY_ID)
-        .where()
-        .eq(URN_COLUMN, urn.toString())
-        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
-        .setFirstRow(start)
-        .setMaxRows(pageSize)
-        .orderBy()
-        .asc(VERSION_COLUMN)
-        .findPagedList();
-
-    final List<Long> versions =
-        pagedList.getList().stream().map(a -> a.getKey().getVersion()).collect(Collectors.toList());
-    return toListResult(versions, null, pagedList, start);
-  }
-
-  @Override
-  @Nonnull
-  public <ASPECT extends RecordTemplate> ListResult<Urn> listUrns(@Nonnull Class<ASPECT> aspectClass, int start,
-      int pageSize) {
-
-    checkValidAspect(aspectClass);
-
-    final PagedList<EbeanMetadataAspect> pagedList = _server.find(EbeanMetadataAspect.class)
-        .select(KEY_ID)
-        .where()
-        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
-        .eq(VERSION_COLUMN, LATEST_VERSION)
-        .setFirstRow(start)
-        .setMaxRows(pageSize)
-        .orderBy()
-        .asc(URN_COLUMN)
-        .findPagedList();
-
-    final List<Urn> urns = pagedList.getList().stream().map(EbeanLocalDAO::extractUrn).collect(Collectors.toList());
-    return toListResult(urns, null, pagedList, start);
-  }
-
-  @Override
-  @Nonnull
-  public <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass, @Nonnull URN urn,
-      int start, int pageSize) {
-
-    checkValidAspect(aspectClass);
-
-    final PagedList<EbeanMetadataAspect> pagedList = _server.find(EbeanMetadataAspect.class)
-        .where()
-        .eq(URN_COLUMN, urn.toString())
-        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
-        .setFirstRow(start)
-        .setMaxRows(pageSize)
-        .orderBy()
-        .asc(VERSION_COLUMN)
-        .findPagedList();
-
-    final List<ASPECT> aspects =
-        pagedList.getList().stream().map(a -> toRecordTemplate(aspectClass, a)).collect(Collectors.toList());
-    final ListResultMetadata listResultMetadata =
-        makeListResultMetadata(pagedList.getList().stream().map(this::toExtraInfo).collect(Collectors.toList()));
-    return toListResult(aspects, listResultMetadata, pagedList, start);
-  }
-
-  @Override
-  @Nonnull
-  public <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass, long version,
-      int start, int pageSize) {
-
-    checkValidAspect(aspectClass);
-
-    final PagedList<EbeanMetadataAspect> pagedList = _server.find(EbeanMetadataAspect.class)
-        .where()
-        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
-        .eq(VERSION_COLUMN, version)
-        .setFirstRow(start)
-        .setMaxRows(pageSize)
-        .orderBy()
-        .asc(URN_COLUMN)
-        .findPagedList();
-
-    final List<ASPECT> aspects =
-        pagedList.getList().stream().map(a -> toRecordTemplate(aspectClass, a)).collect(Collectors.toList());
-    final ListResultMetadata listResultMetadata =
-        makeListResultMetadata(pagedList.getList().stream().map(this::toExtraInfo).collect(Collectors.toList()));
-    return toListResult(aspects, listResultMetadata, pagedList, start);
-  }
-
-  @Override
-  @Nonnull
-  public <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass, int start,
-      int pageSize) {
-    return list(aspectClass, LATEST_VERSION, start, pageSize);
-  }
-
-  @Nonnull
-  private static Urn extractUrn(@Nonnull EbeanMetadataAspect aspect) {
-    final String urn = aspect.getKey().getUrn();
-    try {
-      return new Urn(urn);
-    } catch (URISyntaxException e) {
-      throw new ModelConversionException("Invalid URN: " + urn);
-    }
-  }
+//  @Override
+//  @Nonnull
+//  public <ASPECT extends RecordTemplate> ListResult<Long> listVersions(@Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull URN urn, int start, int pageSize) {
+//
+//    checkValidAspect(aspectClass);
+//
+//    final PagedList<EbeanMetadataAspect> pagedList = _server.find(EbeanMetadataAspect.class)
+//        .select(KEY_ID)
+//        .where()
+//        .eq(URN_COLUMN, urn.toString())
+//        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
+//        .setFirstRow(start)
+//        .setMaxRows(pageSize)
+//        .orderBy()
+//        .asc(VERSION_COLUMN)
+//        .findPagedList();
+//
+//    final List<Long> versions =
+//        pagedList.getList().stream().map(a -> a.getKey().getVersion()).collect(Collectors.toList());
+//    return toListResult(versions, null, pagedList, start);
+//  }
+//
+//  @Override
+//  @Nonnull
+//  public <ASPECT extends RecordTemplate> ListResult<Urn> listUrns(@Nonnull Class<ASPECT> aspectClass, int start,
+//      int pageSize) {
+//
+//    checkValidAspect(aspectClass);
+//
+//    final PagedList<EbeanMetadataAspect> pagedList = _server.find(EbeanMetadataAspect.class)
+//        .select(KEY_ID)
+//        .where()
+//        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
+//        .eq(VERSION_COLUMN, LATEST_VERSION)
+//        .setFirstRow(start)
+//        .setMaxRows(pageSize)
+//        .orderBy()
+//        .asc(URN_COLUMN)
+//        .findPagedList();
+//
+//    final List<Urn> urns = pagedList.getList().stream().map(EbeanLocalDAO::extractUrn).collect(Collectors.toList());
+//    return toListResult(urns, null, pagedList, start);
+//  }
+//
+//  @Override
+//  @Nonnull
+//  public <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass, @Nonnull URN urn,
+//      int start, int pageSize) {
+//
+//    checkValidAspect(aspectClass);
+//
+//    final PagedList<EbeanMetadataAspect> pagedList = _server.find(EbeanMetadataAspect.class)
+//        .where()
+//        .eq(URN_COLUMN, urn.toString())
+//        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
+//        .setFirstRow(start)
+//        .setMaxRows(pageSize)
+//        .orderBy()
+//        .asc(VERSION_COLUMN)
+//        .findPagedList();
+//
+//    final List<ASPECT> aspects =
+//        pagedList.getList().stream().map(a -> toRecordTemplate(aspectClass, a)).collect(Collectors.toList());
+//    final ListResultMetadata listResultMetadata =
+//        makeListResultMetadata(pagedList.getList().stream().map(this::toExtraInfo).collect(Collectors.toList()));
+//    return toListResult(aspects, listResultMetadata, pagedList, start);
+//  }
+//
+//  @Override
+//  @Nonnull
+//  public <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass, long version,
+//      int start, int pageSize) {
+//
+//    checkValidAspect(aspectClass);
+//
+//    final PagedList<EbeanMetadataAspect> pagedList = _server.find(EbeanMetadataAspect.class)
+//        .where()
+//        .eq(ASPECT_COLUMN, ModelUtils.getAspectName(aspectClass))
+//        .eq(VERSION_COLUMN, version)
+//        .setFirstRow(start)
+//        .setMaxRows(pageSize)
+//        .orderBy()
+//        .asc(URN_COLUMN)
+//        .findPagedList();
+//
+//    final List<ASPECT> aspects =
+//        pagedList.getList().stream().map(a -> toRecordTemplate(aspectClass, a)).collect(Collectors.toList());
+//    final ListResultMetadata listResultMetadata =
+//        makeListResultMetadata(pagedList.getList().stream().map(this::toExtraInfo).collect(Collectors.toList()));
+//    return toListResult(aspects, listResultMetadata, pagedList, start);
+//  }
+//
+//  @Override
+//  @Nonnull
+//  public <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass, int start,
+//      int pageSize) {
+//    return list(aspectClass, LATEST_VERSION, start, pageSize);
+//  }
+//
+//  @Nonnull
+//  private static Urn extractUrn(@Nonnull EbeanMetadataAspect aspect) {
+//    final String urn = aspect.getKey().getUrn();
+//    try {
+//      return new Urn(urn);
+//    } catch (URISyntaxException e) {
+//      throw new ModelConversionException("Invalid URN: " + urn);
+//    }
+//  }
 
   @Nonnull
   private static <ASPECT extends RecordTemplate> ASPECT toRecordTemplate(@Nonnull Class<ASPECT> aspectClass,
@@ -369,21 +369,21 @@ public class EbeanLocalDAO<ASPECT_UNION extends UnionTemplate, URN extends Urn>
     return RecordUtils.toRecordTemplate(aspectClass, aspect.getMetadata());
   }
 
-  @Nonnull
-  private <T> ListResult<T> toListResult(@Nonnull List<T> values, @Nullable ListResultMetadata listResultMetadata,
-      @Nonnull PagedList<?> pagedList, int start) {
-    final int nextStart = pagedList.hasNext() ? start + pagedList.getList().size() : ListResult.INVALID_NEXT_START;
-    return ListResult.<T>builder()
-        // Format
-        .values(values)
-        .metadata(listResultMetadata)
-        .nextStart(nextStart)
-        .havingMore(pagedList.hasNext())
-        .totalCount(pagedList.getTotalCount())
-        .totalPageCount(pagedList.getTotalPageCount())
-        .pageSize(pagedList.getPageSize())
-        .build();
-  }
+//  @Nonnull
+//  private <T> ListResult<T> toListResult(@Nonnull List<T> values, @Nullable ListResultMetadata listResultMetadata,
+//      @Nonnull PagedList<?> pagedList, int start) {
+//    final int nextStart = pagedList.hasNext() ? start + pagedList.getList().size() : ListResult.INVALID_NEXT_START;
+//    return ListResult.<T>builder()
+//        // Format
+//        .values(values)
+//        .metadata(listResultMetadata)
+//        .nextStart(nextStart)
+//        .havingMore(pagedList.hasNext())
+//        .totalCount(pagedList.getTotalCount())
+//        .totalPageCount(pagedList.getTotalPageCount())
+//        .pageSize(pagedList.getPageSize())
+//        .build();
+//  }
 
   @Nonnull
   private ExtraInfo toExtraInfo(@Nonnull EbeanMetadataAspect aspect) {
@@ -411,28 +411,28 @@ public class EbeanLocalDAO<ASPECT_UNION extends UnionTemplate, URN extends Urn>
     return extraInfo;
   }
 
-  @Nonnull
-  private ListResultMetadata makeListResultMetadata(@Nonnull List<ExtraInfo> extraInfos) {
-    final ListResultMetadata listResultMetadata = new ListResultMetadata();
-    listResultMetadata.setExtraInfos(new ExtraInfoArray(extraInfos));
-    return listResultMetadata;
-  }
-
-  @Override
-  public long newNumericId(@Nonnull String namespace, int maxTransactionRetry) {
-    return runInTransactionWithRetry(() -> {
-      final Optional<EbeanMetadataId> result = _server.find(EbeanMetadataId.class)
-          .where()
-          .eq(EbeanMetadataId.NAMESPACE_COLUMN, namespace)
-          .orderBy()
-          .desc(EbeanMetadataId.ID_COLUMN)
-          .setMaxRows(1)
-          .findOneOrEmpty();
-
-      EbeanMetadataId id = result.orElse(new EbeanMetadataId(namespace, 0));
-      id.setId(id.getId() + 1);
-      _server.insert(id);
-      return id;
-    }, maxTransactionRetry).getId();
-  }
+//  @Nonnull
+//  private ListResultMetadata makeListResultMetadata(@Nonnull List<ExtraInfo> extraInfos) {
+//    final ListResultMetadata listResultMetadata = new ListResultMetadata();
+//    listResultMetadata.setExtraInfos(new ExtraInfoArray(extraInfos));
+//    return listResultMetadata;
+//  }
+//
+//  @Override
+//  public long newNumericId(@Nonnull String namespace, int maxTransactionRetry) {
+//    return runInTransactionWithRetry(() -> {
+//      final Optional<EbeanMetadataId> result = _server.find(EbeanMetadataId.class)
+//          .where()
+//          .eq(EbeanMetadataId.NAMESPACE_COLUMN, namespace)
+//          .orderBy()
+//          .desc(EbeanMetadataId.ID_COLUMN)
+//          .setMaxRows(1)
+//          .findOneOrEmpty();
+//
+//      EbeanMetadataId id = result.orElse(new EbeanMetadataId(namespace, 0));
+//      id.setId(id.getId() + 1);
+//      _server.insert(id);
+//      return id;
+//    }, maxTransactionRetry).getId();
+//  }
 }

@@ -55,16 +55,16 @@ public abstract class BaseLocalDAO<ASPECT_UNION extends UnionTemplate, URN exten
     RecordTemplate newValue;
   }
 
-  private static final String DEFAULT_ID_NAMESPACE = "global";
-
-  private static final IndefiniteRetention INDEFINITE_RETENTION = new IndefiniteRetention();
+//  private static final String DEFAULT_ID_NAMESPACE = "global";
+//
+//  private static final IndefiniteRetention INDEFINITE_RETENTION = new IndefiniteRetention();
 
   private static final int DEFAULT_MAX_TRANSACTION_RETRY = 3;
 
-  protected final BaseMetadataEventProducer _producer;
+//  protected final BaseMetadataEventProducer _producer;
 
   // Maps an aspect class to the corresponding retention policy
-  private final Map<Class<? extends RecordTemplate>, Retention> _aspectRetentionMap = new HashMap<>();
+//  private final Map<Class<? extends RecordTemplate>, Retention> _aspectRetentionMap = new HashMap<>();
 
   // Maps an aspect class to the corresponding equality tester
   private final Map<Class<? extends RecordTemplate>, EqualityTester<? extends RecordTemplate>>
@@ -76,42 +76,42 @@ public abstract class BaseLocalDAO<ASPECT_UNION extends UnionTemplate, URN exten
 
   public BaseLocalDAO(@Nonnull Class<ASPECT_UNION> aspectUnionClass, @Nonnull BaseMetadataEventProducer producer) {
     super(aspectUnionClass);
-    _producer = producer;
+//    _producer = producer;
   }
 
-  /**
-   * For tests to override the internal clock
-   */
-  public void setClock(@Nonnull Clock clock) {
-    _clock = clock;
-  }
-
-  /**
-   * Sets {@link Retention} for a specific aspect type.
-   */
-  public <ASPECT extends RecordTemplate> void setRetention(@Nonnull Class<ASPECT> aspectClass,
-      @Nonnull Retention retention) {
-    checkValidAspect(aspectClass);
-    _aspectRetentionMap.put(aspectClass, retention);
-  }
-
-  /**
-   * Gets the {@link Retention} for an aspect type, or {@link IndefiniteRetention} if none is registered.
-   */
-  @Nonnull
-  public <ASPECT extends RecordTemplate> Retention getRetention(@Nonnull Class<ASPECT> aspectClass) {
-    checkValidAspect(aspectClass);
-    return _aspectRetentionMap.getOrDefault(aspectClass, INDEFINITE_RETENTION);
-  }
-
-  /**
-   * Sets the {@link EqualityTester} for a specific aspect type.
-   */
-  public <ASPECT extends RecordTemplate> void setEqualityTester(@Nonnull Class<ASPECT> aspectClass,
-      @Nonnull EqualityTester<ASPECT> tester) {
-    checkValidAspect(aspectClass);
-    _aspectEqualityTesterMap.put(aspectClass, tester);
-  }
+//  /**
+//   * For tests to override the internal clock
+//   */
+//  public void setClock(@Nonnull Clock clock) {
+//    _clock = clock;
+//  }
+//
+//  /**
+//   * Sets {@link Retention} for a specific aspect type.
+//   */
+//  public <ASPECT extends RecordTemplate> void setRetention(@Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull Retention retention) {
+//    checkValidAspect(aspectClass);
+//    _aspectRetentionMap.put(aspectClass, retention);
+//  }
+//
+//  /**
+//   * Gets the {@link Retention} for an aspect type, or {@link IndefiniteRetention} if none is registered.
+//   */
+//  @Nonnull
+//  public <ASPECT extends RecordTemplate> Retention getRetention(@Nonnull Class<ASPECT> aspectClass) {
+//    checkValidAspect(aspectClass);
+//    return _aspectRetentionMap.getOrDefault(aspectClass, INDEFINITE_RETENTION);
+//  }
+//
+//  /**
+//   * Sets the {@link EqualityTester} for a specific aspect type.
+//   */
+//  public <ASPECT extends RecordTemplate> void setEqualityTester(@Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull EqualityTester<ASPECT> tester) {
+//    checkValidAspect(aspectClass);
+//    _aspectEqualityTesterMap.put(aspectClass, tester);
+//  }
 
   /**
    * Gets the {@link EqualityTester} for an aspect, or {@link DefaultEqualityTester} if none is registered.
@@ -123,12 +123,12 @@ public abstract class BaseLocalDAO<ASPECT_UNION extends UnionTemplate, URN exten
         key -> new DefaultEqualityTester<ASPECT>());
   }
 
-  /**
-   * Enables or disables model validation before persisting.
-   */
-  public void enableModelValidationOnWrite(boolean enabled) {
-    _modelValidationOnWrite = enabled;
-  }
+//  /**
+//   * Enables or disables model validation before persisting.
+//   */
+//  public void enableModelValidationOnWrite(boolean enabled) {
+//    _modelValidationOnWrite = enabled;
+//  }
 
   /**
    * Adds a new version of aspect for an entity.
@@ -175,15 +175,15 @@ public abstract class BaseLocalDAO<ASPECT_UNION extends UnionTemplate, URN exten
       save(urn, newValue, auditStamp, LATEST_VERSION, oldValue == null);
 
       // 5. Apply retention policy
-      applyRetention(urn, aspectClass, getRetention(aspectClass), largestVersion);
+//      applyRetention(urn, aspectClass, getRetention(aspectClass), largestVersion);
 
       return new AddResult(oldValue, newValue);
     }, maxTransactionRetry);
 
     // 6. Produce MAE after a successful update
-    if (result != null) {
-      _producer.produceMetadataAuditEvent(urn, result.getOldValue(), result.getNewValue());
-    }
+//    if (result != null) {
+//      _producer.produceMetadataAuditEvent(urn, result.getOldValue(), result.getNewValue());
+//    }
   }
 
   /**
@@ -202,22 +202,22 @@ public abstract class BaseLocalDAO<ASPECT_UNION extends UnionTemplate, URN exten
     add(urn, newValue.getClass(), ignored -> newValue, auditStamp);
   }
 
-  private <ASPECT extends RecordTemplate> void applyRetention(@Nonnull URN urn, @Nonnull Class<ASPECT> aspectClass,
-      @Nonnull Retention retention, long largestVersion) {
-    if (retention instanceof IndefiniteRetention) {
-      return;
-    }
-
-    if (retention instanceof VersionBasedRetention) {
-      applyVersionBasedRetention(aspectClass, urn, (VersionBasedRetention) retention, largestVersion);
-      return;
-    }
-
-    if (retention instanceof TimeBasedRetention) {
-      applyTimeBasedRetention(aspectClass, urn, (TimeBasedRetention) retention, _clock.millis());
-      return;
-    }
-  }
+//  private <ASPECT extends RecordTemplate> void applyRetention(@Nonnull URN urn, @Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull Retention retention, long largestVersion) {
+//    if (retention instanceof IndefiniteRetention) {
+//      return;
+//    }
+//
+//    if (retention instanceof VersionBasedRetention) {
+//      applyVersionBasedRetention(aspectClass, urn, (VersionBasedRetention) retention, largestVersion);
+//      return;
+//    }
+//
+//    if (retention instanceof TimeBasedRetention) {
+//      applyTimeBasedRetention(aspectClass, urn, (TimeBasedRetention) retention, _clock.millis());
+//      return;
+//    }
+//  }
 
   /**
    * Runs the given lambda expression in a transaction with a limited number of retries.
@@ -262,139 +262,139 @@ public abstract class BaseLocalDAO<ASPECT_UNION extends UnionTemplate, URN exten
   protected abstract void save(@Nonnull URN urn, @Nonnull RecordTemplate value, @Nonnull AuditStamp auditStamp,
       long version, boolean insert);
 
-  /**
-   * Applies version-based retention against a specific aspect type for an entity
-   *
-   * @param aspectClass the type of aspect to apply retention to
-   * @param urn {@link Urn} for the entity
-   * @param retention the retention configuration
-   * @param largestVersion the largest version number for the aspect type
-   */
-  protected abstract <ASPECT extends RecordTemplate> void applyVersionBasedRetention(@Nonnull Class<ASPECT> aspectClass,
-      @Nonnull URN urn, @Nonnull VersionBasedRetention retention, long largestVersion);
-
-  /**
-   * Applies time-based retention against a specific aspect type for an entity
-   *
-   * @param aspectClass the type of aspect to apply retention to
-   * @param urn {@link Urn} for the entity
-   * @param retention the retention configuration
-   * @param currentTime the current timestamp
-   */
-  protected abstract <ASPECT extends RecordTemplate> void applyTimeBasedRetention(@Nonnull Class<ASPECT> aspectClass,
-      @Nonnull URN urn, @Nonnull TimeBasedRetention retention, long currentTime);
-
-  /**
-   * Emits backfill MetadataAuditEvent for the latest version of an aspect for an entity.
-   *
-   * @param aspectClass the type of aspect to backfill
-   * @param urn {@link Urn} for the entity
-   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
-   * @return the aspect emitted in the backfill message
-   */
-  @Nonnull
-  public <ASPECT extends RecordTemplate> Optional<ASPECT> backfill(@Nonnull Class<ASPECT> aspectClass,
-      @Nonnull URN urn) {
-    checkValidAspect(aspectClass);
-    Optional<ASPECT> aspect = get(aspectClass, urn, LATEST_VERSION);
-    aspect.ifPresent(value -> _producer.produceMetadataAuditEvent(urn, value, value));
-    return aspect;
-  }
-
-  /**
-   * Paginates over all available versions of an aspect for an entity.
-   *
-   * @param aspectClass the type of the aspect to query
-   * @param urn {@link Urn} for the entity
-   * @param start the starting offset of the page
-   * @param pageSize the size of the page
-   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
-   * @return a {@link ListResult} containing a list of version numbers and other pagination information
-   */
-  @Nonnull
-  public abstract <ASPECT extends RecordTemplate> ListResult<Long> listVersions(@Nonnull Class<ASPECT> aspectClass,
-      @Nonnull URN urn, int start, int pageSize);
-
-  /**
-   * Paginates over all URNs for entities that have a specific aspect.
-   *
-   * @param aspectClass the type of the aspect to query
-   * @param start the starting offset of the page
-   * @param pageSize the size of the page
-   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
-   * @return a {@link ListResult} containing a list of URN and other pagination information
-   */
-  @Nonnull
-  public abstract <ASPECT extends RecordTemplate> ListResult<Urn> listUrns(@Nonnull Class<ASPECT> aspectClass,
-      int start, int pageSize);
-
-  /**
-   * Paginates over all versions of an aspect for a specific Urn.
-   *
-   * @param aspectClass the type of the aspect to query
-   * @param urn {@link Urn} for the entity
-   * @param start the starting offset of the page
-   * @param pageSize the size of the page
-   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
-   * @return a {@link ListResult} containing a list of aspects and other pagination information
-   */
-  @Nonnull
-  public abstract <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass,
-      @Nonnull URN urn, int start, int pageSize);
-
-  /**
-   * Paginates over a specific version of a specific aspect for all Urns
-   *
-   * @param aspectClass the type of the aspect to query
-   * @param version the version of the aspect
-   * @param start the starting offset of the page
-   * @param pageSize the size of the page
-   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
-   * @return a {@link ListResult} containing a list of aspects and other pagination information
-   */
-  @Nonnull
-  public abstract <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass,
-      long version, int start, int pageSize);
-
-  /**
-   * Paginates over the latest version of a specific aspect for all Urns
-   *
-   * @param aspectClass the type of the aspect to query
-   * @param start the starting offset of the page
-   * @param pageSize the size of the page
-   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
-   * @return a {@link ListResult} containing a list of aspects and other pagination information
-   */
-  @Nonnull
-  public abstract <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass, int start,
-      int pageSize);
-
-  /**
-   * Generates a new string ID that's guaranteed to be globally unique.
-   */
-  @Nonnull
-  public String newStringId() {
-    return UUID.randomUUID().toString();
-  }
-
-  /**
-   * Generates a new numeric ID that's guaranteed to increase monotonically within the given namespace.
-   */
-  public abstract long newNumericId(@Nonnull String namespace, int maxTransactionRetry);
-
-  /**
-   * Similar to {@link #newNumericId(String, int)} but uses default maximum transaction retry count.
-   */
-  public long newNumericId(@Nonnull String namespace) {
-    return newNumericId(namespace, DEFAULT_MAX_TRANSACTION_RETRY);
-  }
-
-  /**
-   * Similar to {@link #newNumericId(String, int)} but uses a single global namespace
-   */
-  public long newNumericId() {
-    return newNumericId(DEFAULT_ID_NAMESPACE);
-  }
+//  /**
+//   * Applies version-based retention against a specific aspect type for an entity
+//   *
+//   * @param aspectClass the type of aspect to apply retention to
+//   * @param urn {@link Urn} for the entity
+//   * @param retention the retention configuration
+//   * @param largestVersion the largest version number for the aspect type
+//   */
+//  protected abstract <ASPECT extends RecordTemplate> void applyVersionBasedRetention(@Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull URN urn, @Nonnull VersionBasedRetention retention, long largestVersion);
+//
+//  /**
+//   * Applies time-based retention against a specific aspect type for an entity
+//   *
+//   * @param aspectClass the type of aspect to apply retention to
+//   * @param urn {@link Urn} for the entity
+//   * @param retention the retention configuration
+//   * @param currentTime the current timestamp
+//   */
+//  protected abstract <ASPECT extends RecordTemplate> void applyTimeBasedRetention(@Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull URN urn, @Nonnull TimeBasedRetention retention, long currentTime);
+//
+//  /**
+//   * Emits backfill MetadataAuditEvent for the latest version of an aspect for an entity.
+//   *
+//   * @param aspectClass the type of aspect to backfill
+//   * @param urn {@link Urn} for the entity
+//   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
+//   * @return the aspect emitted in the backfill message
+//   */
+//  @Nonnull
+//  public <ASPECT extends RecordTemplate> Optional<ASPECT> backfill(@Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull URN urn) {
+//    checkValidAspect(aspectClass);
+//    Optional<ASPECT> aspect = get(aspectClass, urn, LATEST_VERSION);
+//    aspect.ifPresent(value -> _producer.produceMetadataAuditEvent(urn, value, value));
+//    return aspect;
+//  }
+//
+//  /**
+//   * Paginates over all available versions of an aspect for an entity.
+//   *
+//   * @param aspectClass the type of the aspect to query
+//   * @param urn {@link Urn} for the entity
+//   * @param start the starting offset of the page
+//   * @param pageSize the size of the page
+//   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
+//   * @return a {@link ListResult} containing a list of version numbers and other pagination information
+//   */
+//  @Nonnull
+//  public abstract <ASPECT extends RecordTemplate> ListResult<Long> listVersions(@Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull URN urn, int start, int pageSize);
+//
+//  /**
+//   * Paginates over all URNs for entities that have a specific aspect.
+//   *
+//   * @param aspectClass the type of the aspect to query
+//   * @param start the starting offset of the page
+//   * @param pageSize the size of the page
+//   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
+//   * @return a {@link ListResult} containing a list of URN and other pagination information
+//   */
+//  @Nonnull
+//  public abstract <ASPECT extends RecordTemplate> ListResult<Urn> listUrns(@Nonnull Class<ASPECT> aspectClass,
+//      int start, int pageSize);
+//
+//  /**
+//   * Paginates over all versions of an aspect for a specific Urn.
+//   *
+//   * @param aspectClass the type of the aspect to query
+//   * @param urn {@link Urn} for the entity
+//   * @param start the starting offset of the page
+//   * @param pageSize the size of the page
+//   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
+//   * @return a {@link ListResult} containing a list of aspects and other pagination information
+//   */
+//  @Nonnull
+//  public abstract <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass,
+//      @Nonnull URN urn, int start, int pageSize);
+//
+//  /**
+//   * Paginates over a specific version of a specific aspect for all Urns
+//   *
+//   * @param aspectClass the type of the aspect to query
+//   * @param version the version of the aspect
+//   * @param start the starting offset of the page
+//   * @param pageSize the size of the page
+//   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
+//   * @return a {@link ListResult} containing a list of aspects and other pagination information
+//   */
+//  @Nonnull
+//  public abstract <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass,
+//      long version, int start, int pageSize);
+//
+//  /**
+//   * Paginates over the latest version of a specific aspect for all Urns
+//   *
+//   * @param aspectClass the type of the aspect to query
+//   * @param start the starting offset of the page
+//   * @param pageSize the size of the page
+//   * @param <ASPECT> must be a supported aspect type in {@code ASPECT_UNION}.
+//   * @return a {@link ListResult} containing a list of aspects and other pagination information
+//   */
+//  @Nonnull
+//  public abstract <ASPECT extends RecordTemplate> ListResult<ASPECT> list(@Nonnull Class<ASPECT> aspectClass, int start,
+//      int pageSize);
+//
+//  /**
+//   * Generates a new string ID that's guaranteed to be globally unique.
+//   */
+//  @Nonnull
+//  public String newStringId() {
+//    return UUID.randomUUID().toString();
+//  }
+//
+//  /**
+//   * Generates a new numeric ID that's guaranteed to increase monotonically within the given namespace.
+//   */
+//  public abstract long newNumericId(@Nonnull String namespace, int maxTransactionRetry);
+//
+//  /**
+//   * Similar to {@link #newNumericId(String, int)} but uses default maximum transaction retry count.
+//   */
+//  public long newNumericId(@Nonnull String namespace) {
+//    return newNumericId(namespace, DEFAULT_MAX_TRANSACTION_RETRY);
+//  }
+//
+//  /**
+//   * Similar to {@link #newNumericId(String, int)} but uses a single global namespace
+//   */
+//  public long newNumericId() {
+//    return newNumericId(DEFAULT_ID_NAMESPACE);
+//  }
 
   /**
    * Validates a model against its schema.

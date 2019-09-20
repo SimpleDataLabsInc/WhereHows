@@ -232,14 +232,6 @@
           }, {
             "method" : "get"
           } ],
-          "actions" : [ {
-            "name" : "backfill",
-            "parameters" : [ {
-              "name" : "aspectNames",
-              "type" : "{ \"type\" : \"array\", \"items\" : \"string\" }"
-            } ],
-            "returns" : "com.linkedin.metadata.snapshot.DatasetSnapshot"
-          } ],
           "entity" : {
             "path" : "/datasets/{dataset}/snapshot/{snapshotId}"
           }
