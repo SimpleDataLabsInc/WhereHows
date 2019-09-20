@@ -22,9 +22,10 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  <listener>
-    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-  </listener>
+<!--  <listener>-->
+<!--    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>-->
+<!--  </listener>-->
+  <!-- servlet definitions -->
 
   <!-- Start: Servlet for starting thrift over http protocol -->
   <servlet>
@@ -34,11 +35,10 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>HiveMetastoreServlet</servlet-name>
-    <url-pattern>/thrift</url-pattern>
+    <url-pattern>/thrift/*</url-pattern>
   </servlet-mapping>
 
 
-  <!-- servlet definitions -->
   <!--
     HttpRequestHandlerServlet loads the "restliServlet" spring bean as a servlet.  For details, see:
     http://static.springsource.org/spring-framework/docs/3.2.0.RC1/api/org/springframework/web/context/support/HttpRequestHandlerServlet.html
@@ -54,7 +54,9 @@
 
   <servlet-mapping>
     <servlet-name>restliRequestHandler</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/datahub/*</url-pattern>
+    <url-pattern>/r2/*</url-pattern>
+    <url-pattern>/r2</url-pattern>
   </servlet-mapping>
 
 </web-app>
