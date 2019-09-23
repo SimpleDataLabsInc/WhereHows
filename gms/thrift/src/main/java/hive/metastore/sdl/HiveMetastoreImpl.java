@@ -37,22 +37,24 @@ public class HiveMetastoreImpl implements ThriftHiveMetastore.Iface {
 
     @Override
     public void alter_catalog(AlterCatalogRequest rqst) throws NoSuchObjectException, InvalidOperationException, MetaException, TException {
-
+        log.info("Looking for {}", rqst);
     }
 
     @Override
     public GetCatalogResponse get_catalog(GetCatalogRequest catName) throws NoSuchObjectException, MetaException, TException {
+        log.info("Looking for {}", catName);
         return null;
     }
 
     @Override
     public GetCatalogsResponse get_catalogs() throws MetaException, TException {
+        log.info("Looking for catalogs");
         return null;
     }
 
     @Override
     public void drop_catalog(DropCatalogRequest catName) throws NoSuchObjectException, InvalidOperationException, MetaException, TException {
-
+        log.info("Deleting for {}", catName);
     }
 
     @Override

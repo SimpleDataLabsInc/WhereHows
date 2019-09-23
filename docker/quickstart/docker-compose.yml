@@ -126,7 +126,7 @@ services:
     hostname: datahub-gms
     container_name: datahub-gms
     ports:
-      - "8080:8080"
+      - "8089:8089"
     environment:
       - EBEAN_DATASOURCE_USERNAME=datahub
       - EBEAN_DATASOURCE_PASSWORD=datahub

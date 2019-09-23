@@ -1,5 +1,6 @@
 package hive.web.sdl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface;
 import org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Processor;
 import org.apache.thrift.protocol.TBinaryProtocol;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 public class HiveMetastoreServlet extends HttpServlet {
 
     private static final long serialVersionUID = -8777659712204723236L;
@@ -20,7 +22,8 @@ public class HiveMetastoreServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-        Iface serviceHandler = webApplicationContext .getBean("hiveMetastore", Iface.class);
+        Iface serviceHandler = webApplicationContext.getBean("hiveMetastore", Iface.class);
+        log.info("{}", serviceHandler);
         Processor<Iface> processor = new Processor<Iface>(serviceHandler);
         thriftServlet = new ThriftDelegateServlet(processor, new TBinaryProtocol.Factory());
     }
