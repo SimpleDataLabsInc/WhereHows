@@ -14,6 +14,46 @@
       "type": "string",
       "doc": "Description of the workflow",
       "optional": true
+    },
+    {
+      "name": "project",
+      "doc": "Project this workflow is part of",
+      "type": "com.linkedin.common.DatasetUrn"
+    },
+    {
+      "name": "versions",
+      "type": {
+        "type": "array",
+        "items": "WorkflowVersion"
+      },
+      "default": [],
+      "optional": true
+    },
+    {
+      "name": "inputDatasets",
+      "doc": "List of datasets used in this workflow",
+      "type": {
+        "type": "array",
+        "items": "com.linkedin.common.DatasetUrn"
+      },
+      "default": [],
+      "optional": true
+    },
+    {
+      "name": "outputDatasets",
+      "doc": "List of datasets created in this workflow",
+      "type": {
+        "type": "array",
+        "items": "com.linkedin.common.DatasetUrn"
+      },
+      "default": [],
+      "optional": true
+    },
+    {
+      "name": "configurations",
+      "type": "com.linkedin.common.Configurations",
+      "doc": "workflow configurations",
+      "optional": true
     }
   ]
 }

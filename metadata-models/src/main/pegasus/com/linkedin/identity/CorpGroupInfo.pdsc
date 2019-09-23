@@ -7,7 +7,8 @@
     {
       "name": "email",
       "type": "com.linkedin.common.EmailAddress",
-      "doc": "email of this group"
+      "doc": "email of this group",
+      "optional": true
     },
     {
       "name": "admins",
@@ -26,12 +27,13 @@
       }
     },
     {
-      "name": "groups",
-      "doc": "List of groups in this group.",
+      "name": "projects",
+      "doc": "List of projects in this group.",
       "type": {
         "type": "array",
-        "items": "com.linkedin.common.CorpGroupUrn"
-      }
+        "items": "com.linkedin.common.ProjectUrn"
+      },
+      "optional": true
     }
   ]
 }

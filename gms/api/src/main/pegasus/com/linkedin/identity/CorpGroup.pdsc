@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "name": "CorpGroup",
+  "namespace": "com.linkedin.identity",
+  "doc": "Metadata for a corp group",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of the corp group"
+    },
+    {
+      "name": "info",
+      "type": "com.linkedin.identity.CorpGroupInfo",
+      "doc": "Information of the corp group",
+      "optional": true
+    }
+  ]
+}

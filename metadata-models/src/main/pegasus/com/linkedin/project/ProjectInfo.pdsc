@@ -14,6 +14,36 @@
       "type": "string",
       "doc": "Description of the project",
       "optional": true
+    },
+    {
+      "name": "owner",
+      "doc": "Owner of the project",
+      "type": "com.linkedin.common.CorpGroupUrn"
+    },
+    {
+      "name": "datasets",
+      "doc": "List of datasets in this project.",
+      "type": {
+        "type": "array",
+        "items": "com.linkedin.common.DatasetUrn"
+      },
+      "optional": true,
+      "default": []
+    },
+    {
+      "name": "configurations",
+      "type": "com.linkedin.common.Configurations",
+      "doc": "workflow configurations",
+      "optional": true
+    },
+    {
+      "name": "workflows",
+      "doc": "List of workflows in this project.",
+      "type": {
+        "type": "array",
+        "items": "com.linkedin.common.WorkflowUrn"
+      },
+      "default": []
     }
   ]
 }

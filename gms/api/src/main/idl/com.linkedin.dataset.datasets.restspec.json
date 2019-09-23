@@ -219,7 +219,7 @@
         "namespace" : "com.linkedin.dataset",
         "path" : "/datasets/{dataset}/snapshot",
         "schema" : "com.linkedin.metadata.snapshot.DatasetSnapshot",
-        "doc" : "Rest.li entry point: /dataset/{datasetKey}/snapshot\n\ngenerated from: com.linkedin.dataset.rest.resources.DatasetsSnapshot",
+        "doc" : "Rest.li entry point: /datasets/{datasetKey}/snapshot\n\ngenerated from: com.linkedin.dataset.rest.resources.DatasetsSnapshot",
         "collection" : {
           "identifier" : {
             "name" : "snapshotId",

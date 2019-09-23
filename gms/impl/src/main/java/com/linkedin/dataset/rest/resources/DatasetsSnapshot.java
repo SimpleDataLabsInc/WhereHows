@@ -21,7 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * Rest.li entry point: /dataset/{datasetKey}/snapshot
+ * Rest.li entry point: /datasets/{datasetKey}/snapshot
  */
 @Slf4j
 @RestLiCollection(name = "snapshot", namespace = "com.linkedin.dataset", parent = Datasets.class)

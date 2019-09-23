@@ -1,6 +1,34 @@
 {
   "models" : [ {
     "type" : "typeref",
+    "name" : "CorpGroupUrn",
+    "namespace" : "com.linkedin.common",
+    "doc" : "Corporate group's AD/LDAP login",
+    "ref" : "string",
+    "java" : {
+      "class" : "com.linkedin.common.urn.CorpGroupUrn"
+    },
+    "validate" : {
+      "com.linkedin.common.validator.TypedUrnValidator" : {
+        "accessible" : true,
+        "entityType" : "corpGroup",
+        "owningTeam" : "urn:li:internalTeam:security",
+        "constructable" : true,
+        "name" : "CorpGroup",
+        "namespace" : "li",
+        "doc" : "Corporate group's AD/LDAP login",
+        "owners" : [ "urn:li:corpuser:fbar", "urn:li:corpuser:bfoo" ],
+        "fields" : [ {
+          "name" : "groupName",
+          "doc" : "The name of the AD/LDAP group.",
+          "type" : "string",
+          "maxLength" : 64
+        } ],
+        "maxLength" : 81
+      }
+    }
+  }, {
+    "type" : "typeref",
     "name" : "CorpuserUrn",
     "namespace" : "com.linkedin.common",
     "doc" : "Corporate user's AD/LDAP login",
@@ -129,7 +157,7 @@
           "name" : "teams",
           "type" : {
             "type" : "array",
-            "items" : "string"
+            "items" : "com.linkedin.common.CorpGroupUrn"
           },
           "doc" : "Teams that the user belongs to e.g. Metadata",
           "default" : [ ]

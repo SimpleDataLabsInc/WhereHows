@@ -14,7 +14,7 @@
       "name": "teams",
       "type": {
         "type": "array",
-        "items": "string"
+        "items": "com.linkedin.common.CorpGroupUrn"
       },
       "doc": "Teams that the user belongs to e.g. Metadata",
       "default": []

@@ -17,7 +17,7 @@ public class LocalEbeanServerConfigFactory {
   @Value("${EBEAN_DATASOURCE_PASSWORD:datahub}")
   private String ebeanDatasourcePassword;
 
-  @Value("${EBEAN_DATASOURCE_URL:jdbc:mysql://localhost:3306/datahub}")
+  @Value("${EBEAN_DATASOURCE_URL:jdbc:mysql://localhost:3306/datahub?useSSL=false}")
   private String ebeanDatasourceUrl;
 
   @Value("${EBEAN_DATASOURCE_DRIVER:com.mysql.jdbc.Driver}")
