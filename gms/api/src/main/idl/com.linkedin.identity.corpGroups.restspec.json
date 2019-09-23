@@ -1,0 +1,82 @@
+{
+  "name" : "corpGroups",
+  "namespace" : "com.linkedin.identity",
+  "path" : "/corpGroups",
+  "schema" : "com.linkedin.identity.CorpGroup",
+  "doc" : "generated from: com.linkedin.identity.rest.resources.CorpGroups",
+  "collection" : {
+    "identifier" : {
+      "name" : "corpGroup",
+      "type" : "com.linkedin.identity.CorpGroupKey",
+      "params" : "com.linkedin.restli.common.EmptyRecord"
+    },
+    "supports" : [ "batch_get", "get" ],
+    "methods" : [ {
+      "method" : "get",
+      "parameters" : [ {
+        "name" : "aspects",
+        "type" : "{ \"type\" : \"array\", \"items\" : \"string\" }",
+        "default" : "[]"
+      } ]
+    }, {
+      "method" : "batch_get",
+      "parameters" : [ {
+        "name" : "aspects",
+        "type" : "{ \"type\" : \"array\", \"items\" : \"string\" }",
+        "default" : "[]"
+      } ]
+    } ],
+    "entity" : {
+      "path" : "/corpGroups/{corpGroup}",
+      "subresources" : [ {
+        "name" : "info",
+        "namespace" : "com.linkedin.identity",
+        "path" : "/corpGroups/{corpGroup}/info",
+        "schema" : "com.linkedin.identity.CorpGroupInfo",
+        "doc" : "Rest.li entry point: /corpGroups/{corpGroupKey}/info\n\ngenerated from: com.linkedin.identity.rest.resources.CorpGroupsInfoResource",
+        "collection" : {
+          "identifier" : {
+            "name" : "infoId",
+            "type" : "long"
+          },
+          "supports" : [ "create", "get" ],
+          "methods" : [ {
+            "method" : "create"
+          }, {
+            "method" : "get"
+          } ],
+          "entity" : {
+            "path" : "/corpGroups/{corpGroup}/info/{infoId}"
+          }
+        }
+      }, {
+        "annotations" : {
+          "createOnly" : {
+            "value" : [ "urn" ]
+          }
+        },
+        "name" : "snapshot",
+        "namespace" : "com.linkedin.identity.corpgroup",
+        "path" : "/corpGroups/{corpGroup}/snapshot",
+        "schema" : "com.linkedin.metadata.snapshot.CorpGroupSnapshot",
+        "doc" : "Rest.li entry point: /corpGroups/{corpGroupKey}/snapshot\n\ngenerated from: com.linkedin.identity.rest.resources.CorpGroupsSnapshot",
+        "collection" : {
+          "identifier" : {
+            "name" : "snapshotId",
+            "type" : "com.linkedin.metadata.snapshot.SnapshotKey",
+            "params" : "com.linkedin.restli.common.EmptyRecord"
+          },
+          "supports" : [ "create", "get" ],
+          "methods" : [ {
+            "method" : "create"
+          }, {
+            "method" : "get"
+          } ],
+          "entity" : {
+            "path" : "/corpGroups/{corpGroup}/snapshot/{snapshotId}"
+          }
+        }
+      } ]
+    }
+  }
+}

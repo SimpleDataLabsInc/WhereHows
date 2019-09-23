@@ -1,9 +1,9 @@
 package com.linkedin.project.rest.resources;
 
-import com.linkedin.common.Configurations;
 import com.linkedin.common.urn.ProjectUrn;
 import com.linkedin.metadata.aspect.ProjectAspect;
 import com.linkedin.metadata.dao.BaseLocalDAO;
+import com.linkedin.metadata.dao.BaseSearchDAO;
 import com.linkedin.metadata.dao.utils.ModelUtils;
 import com.linkedin.metadata.restli.BaseEntityResource;
 import com.linkedin.metadata.snapshot.ProjectSnapshot;
@@ -73,13 +73,6 @@ public final class Projects extends BaseEntityResource<
         return value;
     }
 
-//    @RestMethod.GetAll
-//    @Nonnull
-//    public Task<List<Project>> getAll(@QueryParam(PARAM_ASPECTS) @Optional("[]") @Nonnull String[] aspectNames,
-//                                       @QueryParam(PARAM_FILTER) @Optional @Nullable Filter filter) {
-//        return super.getAll(aspectNames, filter);
-//    }
-
     @Override
     @Nonnull
     protected ProjectSnapshot toSnapshot(@Nonnull Project project, @Nonnull ProjectUrn projectUrn) {
@@ -94,7 +87,7 @@ public final class Projects extends BaseEntityResource<
     @Override
     @Nonnull
     public Task<Project> get(@Nonnull ComplexResourceKey<ProjectKey, EmptyRecord> key,
-                              @QueryParam(PARAM_ASPECTS) @Optional("[]") String[] aspectNames) {
+                               @QueryParam(PARAM_ASPECTS) @Optional("[]") String[] aspectNames) {
         return super.get(key, aspectNames);
     }
 
@@ -106,14 +99,4 @@ public final class Projects extends BaseEntityResource<
             @QueryParam(PARAM_ASPECTS) @Optional("[]") String[] aspectNames) {
         return super.batchGet(keys, aspectNames);
     }
-
-//    @Finder(FINDER_SEARCH)
-//    @Override
-//    @Nonnull
-//    public Task<CollectionResult<Project, SearchResultMetadata>> search(@QueryParam(PARAM_INPUT) @Nonnull String input,
-//                                                                         @QueryParam(PARAM_ASPECTS) @Optional("[]") @Nonnull String[] aspectNames,
-//                                                                         @QueryParam(PARAM_FILTER) @Optional @Nullable Filter filter,
-//                                                                         @PagingContextParam @Nonnull PagingContext pagingContext) {
-//        return super.search(input, aspectNames, filter, pagingContext);
-//    }
 }
