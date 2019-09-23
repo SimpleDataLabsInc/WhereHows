@@ -1,13 +1,13 @@
 {
-  "name" : "corpGroups",
-  "namespace" : "com.linkedin.identity",
-  "path" : "/corpGroups",
-  "schema" : "com.linkedin.identity.CorpGroup",
-  "doc" : "generated from: com.linkedin.identity.rest.resources.CorpGroups",
+  "name" : "projects",
+  "namespace" : "com.linkedin.project",
+  "path" : "/projects",
+  "schema" : "com.linkedin.project.Project",
+  "doc" : "generated from: com.linkedin.project.rest.resources.Projects",
   "collection" : {
     "identifier" : {
-      "name" : "corpGroup",
-      "type" : "com.linkedin.identity.CorpGroupKey",
+      "name" : "project",
+      "type" : "com.linkedin.project.ProjectKey",
       "params" : "com.linkedin.restli.common.EmptyRecord"
     },
     "supports" : [ "batch_get", "get" ],
@@ -27,13 +27,13 @@
       } ]
     } ],
     "entity" : {
-      "path" : "/corpGroups/{corpGroup}",
+      "path" : "/projects/{project}",
       "subresources" : [ {
         "name" : "info",
-        "namespace" : "com.linkedin.identity.corpgroup",
-        "path" : "/corpGroups/{corpGroup}/info",
-        "schema" : "com.linkedin.identity.CorpGroupInfo",
-        "doc" : "Rest.li entry point: /corpGroups/{corpGroupKey}/info\n\ngenerated from: com.linkedin.identity.rest.resources.CorpGroupsInfoResource",
+        "namespace" : "com.linkedin.project",
+        "path" : "/projects/{project}/info",
+        "schema" : "com.linkedin.project.ProjectInfo",
+        "doc" : "Rest.li entry point: /projects/{projectKey}/info\n\ngenerated from: com.linkedin.project.rest.resources.ProjectsInfoResource",
         "collection" : {
           "identifier" : {
             "name" : "infoId",
@@ -46,7 +46,7 @@
             "method" : "get"
           } ],
           "entity" : {
-            "path" : "/corpGroups/{corpGroup}/info/{infoId}"
+            "path" : "/projects/{project}/info/{infoId}"
           }
         }
       }, {
@@ -56,10 +56,10 @@
           }
         },
         "name" : "snapshot",
-        "namespace" : "com.linkedin.identity.corpgroup",
-        "path" : "/corpGroups/{corpGroup}/snapshot",
-        "schema" : "com.linkedin.metadata.snapshot.CorpGroupSnapshot",
-        "doc" : "Rest.li entry point: /corpGroups/{corpGroupKey}/snapshot\n\ngenerated from: com.linkedin.identity.rest.resources.CorpGroupsSnapshot",
+        "namespace" : "com.linkedin.project",
+        "path" : "/projects/{project}/snapshot",
+        "schema" : "com.linkedin.metadata.snapshot.ProjectSnapshot",
+        "doc" : "Rest.li entry point: /projects/{projectKey}/snapshot\n\ngenerated from: com.linkedin.project.rest.resources.ProjectsSnapshot",
         "collection" : {
           "identifier" : {
             "name" : "snapshotId",
@@ -73,7 +73,7 @@
             "method" : "get"
           } ],
           "entity" : {
-            "path" : "/corpGroups/{corpGroup}/snapshot/{snapshotId}"
+            "path" : "/projects/{project}/snapshot/{snapshotId}"
           }
         }
       } ]

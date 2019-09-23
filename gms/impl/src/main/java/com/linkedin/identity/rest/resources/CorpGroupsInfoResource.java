@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 /**
  * Rest.li entry point: /corpGroups/{corpGroupKey}/info
  */
-@RestLiCollection(name = "info", namespace = "com.linkedin.identity", parent = CorpGroups.class)
+@RestLiCollection(name = "info", namespace = "com.linkedin.identity.corpgroup", parent = CorpGroups.class)
 public final class CorpGroupsInfoResource extends BaseCorpGroupsAspectResource<CorpGroupInfo> {
 
     public CorpGroupsInfoResource() {

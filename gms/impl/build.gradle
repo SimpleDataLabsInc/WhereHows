@@ -23,6 +23,8 @@ dependencies {
 pegasus.main.idlOptions.addIdlItem([
         'com.linkedin.dataset.rest',
         'com.linkedin.identity.rest',
+        'com.linkedin.project.rest',
+        'com.linkedin.workflow.rest',
         'com.linkedin.metric.rest'
 ])
 

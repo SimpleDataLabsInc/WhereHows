@@ -1,5 +1,19 @@
 {
   "models" : [ {
+    "type" : "record",
+    "name" : "Configurations",
+    "namespace" : "com.linkedin.common",
+    "doc" : "Configuration metadata aspect",
+    "fields" : [ {
+      "name" : "configurations",
+      "type" : {
+        "type" : "map",
+        "values" : "string"
+      },
+      "doc" : "A key-value map to capture any other non-standardized properties for the dataset",
+      "default" : { }
+    } ]
+  }, {
     "type" : "typeref",
     "name" : "CorpGroupUrn",
     "namespace" : "com.linkedin.common",
@@ -29,38 +43,41 @@
     }
   }, {
     "type" : "typeref",
-    "name" : "CorpuserUrn",
+    "name" : "DatasetUrn",
     "namespace" : "com.linkedin.common",
-    "doc" : "Corporate user's AD/LDAP login",
+    "doc" : "Standardized dataset identifier.",
     "ref" : "string",
     "java" : {
-      "coercerClass" : "com.linkedin.common.urn.CorpuserUrnCoercer",
-      "class" : "com.linkedin.common.urn.CorpuserUrn"
+      "coercerClass" : "com.linkedin.common.urn.DatasetUrnCoercer",
+      "class" : "com.linkedin.common.urn.DatasetUrn"
     },
     "validate" : {
       "com.linkedin.common.validator.TypedUrnValidator" : {
         "accessible" : true,
-        "entityType" : "corpuser",
-        "owningTeam" : "urn:li:internalTeam:security",
+        "entityType" : "dataset",
+        "owningTeam" : "urn:li:internalTeam:datahub",
         "constructable" : true,
-        "name" : "Corpuser",
+        "name" : "Dataset",
         "namespace" : "li",
-        "doc" : "Corporate user's AD/LDAP login",
+        "doc" : "Standardized dataset identifier.",
         "owners" : [ "urn:li:corpuser:fbar", "urn:li:corpuser:bfoo" ],
         "fields" : [ {
-          "name" : "username",
-          "doc" : "The name of the AD/LDAP user.",
+          "name" : "platform",
+          "doc" : "Standardized platform urn where dataset is defined.",
+          "type" : "com.linkedin.common.urn.DataPlatformUrn"
+        }, {
+          "name" : "datasetName",
+          "doc" : "Dataset native name e.g. <db>.<table>, /dir/subdir/<name>, or <name>",
           "type" : "string",
-          "maxLength" : 20
+          "maxLength" : 210
+        }, {
+          "name" : "origin",
+          "doc" : "Fabric type where dataset belongs to or where it was generated.",
+          "type" : "com.linkedin.common.FabricType"
         } ],
-        "maxLength" : 36
+        "maxLength" : 284
       }
     }
-  }, {
-    "type" : "typeref",
-    "name" : "EmailAddress",
-    "namespace" : "com.linkedin.common",
-    "ref" : "string"
   }, {
     "type" : "typeref",
     "name" : "ProjectUrn",
@@ -90,68 +107,33 @@
       }
     }
   }, {
-    "type" : "record",
-    "name" : "CorpGroup",
-    "namespace" : "com.linkedin.identity",
-    "doc" : "Metadata for a corp group",
-    "fields" : [ {
-      "name" : "name",
-      "type" : "string",
-      "doc" : "Name of the corp group"
-    }, {
-      "name" : "info",
-      "type" : {
-        "type" : "record",
-        "name" : "CorpGroupInfo",
-        "doc" : "group of corpUser, it may contains nested group",
+    "type" : "typeref",
+    "name" : "WorkflowUrn",
+    "namespace" : "com.linkedin.common",
+    "doc" : "Workflow URN",
+    "ref" : "string",
+    "java" : {
+      "coercerClass" : "com.linkedin.common.urn.WorkflowUrnCoercer",
+      "class" : "com.linkedin.common.urn.WorkflowUrn"
+    },
+    "validate" : {
+      "com.linkedin.common.validator.TypedUrnValidator" : {
+        "accessible" : true,
+        "entityType" : "workflow",
+        "constructable" : true,
+        "name" : "Workflow",
+        "namespace" : "li",
+        "doc" : "Workflow Urn",
+        "owners" : "urn:li:corpgroup:fbar",
         "fields" : [ {
-          "name" : "email",
-          "type" : "com.linkedin.common.EmailAddress",
-          "doc" : "email of this group",
-          "optional" : true
-        }, {
-          "name" : "admins",
-          "type" : {
-            "type" : "array",
-            "items" : "com.linkedin.common.CorpuserUrn"
-          },
-          "doc" : "owners of this group"
-        }, {
-          "name" : "members",
-          "type" : {
-            "type" : "array",
-            "items" : "com.linkedin.common.CorpuserUrn"
-          },
-          "doc" : "List of ldap urn in this group."
-        }, {
-          "name" : "projects",
-          "type" : {
-            "type" : "array",
-            "items" : "com.linkedin.common.ProjectUrn"
-          },
-          "doc" : "List of projects in this group.",
-          "optional" : true
-        } ]
-      },
-      "doc" : "Information of the corp group",
-      "optional" : true
-    } ]
-  }, "com.linkedin.identity.CorpGroupInfo", {
-    "type" : "record",
-    "name" : "CorpGroupKey",
-    "namespace" : "com.linkedin.identity",
-    "doc" : "Key for CorpGroup resource",
-    "fields" : [ {
-      "name" : "name",
-      "type" : "string",
-      "doc" : "group name e.g. wherehows-dev, ask_metadata ",
-      "validate" : {
-        "strlen" : {
-          "min" : 1,
-          "max" : 50
-        }
+          "name" : "name",
+          "doc" : "Name of the workflow",
+          "type" : "string",
+          "maxLength" : 20
+        } ],
+        "maxLength" : 36
       }
-    } ]
+    }
   }, {
     "type" : "record",
     "name" : "AspectVersion",
@@ -168,26 +150,67 @@
     } ]
   }, {
     "type" : "typeref",
-    "name" : "CorpGroupAspect",
+    "name" : "ProjectAspect",
     "namespace" : "com.linkedin.metadata.aspect",
-    "doc" : "A union of all supported metadata aspects for a CorpGroup",
-    "ref" : [ "com.linkedin.identity.CorpGroupInfo" ]
+    "doc" : "A union of all supported metadata aspects for a Project",
+    "ref" : [ {
+      "type" : "record",
+      "name" : "ProjectInfo",
+      "namespace" : "com.linkedin.project",
+      "doc" : "Project information",
+      "fields" : [ {
+        "name" : "name",
+        "type" : "string",
+        "doc" : "Name of the project"
+      }, {
+        "name" : "description",
+        "type" : "string",
+        "doc" : "Description of the project",
+        "optional" : true
+      }, {
+        "name" : "owner",
+        "type" : "com.linkedin.common.CorpGroupUrn",
+        "doc" : "Owner of the project"
+      }, {
+        "name" : "datasets",
+        "type" : {
+          "type" : "array",
+          "items" : "com.linkedin.common.DatasetUrn"
+        },
+        "doc" : "List of datasets in this project.",
+        "default" : [ ],
+        "optional" : true
+      }, {
+        "name" : "configurations",
+        "type" : "com.linkedin.common.Configurations",
+        "doc" : "workflow configurations",
+        "optional" : true
+      }, {
+        "name" : "workflows",
+        "type" : {
+          "type" : "array",
+          "items" : "com.linkedin.common.WorkflowUrn"
+        },
+        "doc" : "List of workflows in this project.",
+        "default" : [ ]
+      } ]
+    } ]
   }, {
     "type" : "record",
-    "name" : "CorpGroupSnapshot",
+    "name" : "ProjectSnapshot",
     "namespace" : "com.linkedin.metadata.snapshot",
-    "doc" : "A metadata snapshot for a specific CorpGroup entity.",
+    "doc" : "A metadata snapshot for a specific Project entity.",
     "fields" : [ {
       "name" : "urn",
-      "type" : "com.linkedin.common.CorpGroupUrn",
+      "type" : "com.linkedin.common.ProjectUrn",
       "doc" : "URN for the entity the metadata snapshot is associated with."
     }, {
       "name" : "aspects",
       "type" : {
         "type" : "array",
-        "items" : "com.linkedin.metadata.aspect.CorpGroupAspect"
+        "items" : "com.linkedin.metadata.aspect.ProjectAspect"
       },
-      "doc" : "The list of metadata aspects associated with the LdapUser. Depending on the use case, this can either be all, or a selection, of supported aspects."
+      "doc" : "The list of metadata aspects associated with the Project. Depending on the use case, this can either be all, or a selection, of supported aspects."
     } ]
   }, {
     "type" : "record",
@@ -204,6 +227,37 @@
     } ]
   }, {
     "type" : "record",
+    "name" : "Project",
+    "namespace" : "com.linkedin.project",
+    "doc" : "Metadata for a project",
+    "fields" : [ {
+      "name" : "name",
+      "type" : "string",
+      "doc" : "Name of the project"
+    }, {
+      "name" : "info",
+      "type" : "ProjectInfo",
+      "doc" : "Information of the project",
+      "optional" : true
+    } ]
+  }, "com.linkedin.project.ProjectInfo", {
+    "type" : "record",
+    "name" : "ProjectKey",
+    "namespace" : "com.linkedin.project",
+    "doc" : "Key for project resource",
+    "fields" : [ {
+      "name" : "name",
+      "type" : "string",
+      "doc" : "Name of the project",
+      "validate" : {
+        "strlen" : {
+          "min" : 1,
+          "max" : 20
+        }
+      }
+    } ]
+  }, {
+    "type" : "record",
     "name" : "EmptyRecord",
     "namespace" : "com.linkedin.restli.common",
     "doc" : "An literally empty record.  Intended as a marker to indicate the absence of content where a record type is required.  If used the underlying DataMap *must* be empty, EmptyRecordValidator is provided to help enforce this.  For example,  CreateRequest extends Request<EmptyRecord> to indicate it has no response body.   Also, a ComplexKeyResource implementation that has no ParamKey should have a signature like XyzResource implements ComplexKeyResource<XyzKey, EmptyRecord, Xyz>.",
@@ -213,15 +267,15 @@
     }
   } ],
   "schema" : {
-    "name" : "corpGroups",
-    "namespace" : "com.linkedin.identity",
-    "path" : "/corpGroups",
-    "schema" : "com.linkedin.identity.CorpGroup",
-    "doc" : "generated from: com.linkedin.identity.rest.resources.CorpGroups",
+    "name" : "projects",
+    "namespace" : "com.linkedin.project",
+    "path" : "/projects",
+    "schema" : "com.linkedin.project.Project",
+    "doc" : "generated from: com.linkedin.project.rest.resources.Projects",
     "collection" : {
       "identifier" : {
-        "name" : "corpGroup",
-        "type" : "com.linkedin.identity.CorpGroupKey",
+        "name" : "project",
+        "type" : "com.linkedin.project.ProjectKey",
         "params" : "com.linkedin.restli.common.EmptyRecord"
       },
       "supports" : [ "batch_get", "get" ],
@@ -241,13 +295,13 @@
         } ]
       } ],
       "entity" : {
-        "path" : "/corpGroups/{corpGroup}",
+        "path" : "/projects/{project}",
         "subresources" : [ {
           "name" : "info",
-          "namespace" : "com.linkedin.identity.corpgroup",
-          "path" : "/corpGroups/{corpGroup}/info",
-          "schema" : "com.linkedin.identity.CorpGroupInfo",
-          "doc" : "Rest.li entry point: /corpGroups/{corpGroupKey}/info\n\ngenerated from: com.linkedin.identity.rest.resources.CorpGroupsInfoResource",
+          "namespace" : "com.linkedin.project",
+          "path" : "/projects/{project}/info",
+          "schema" : "com.linkedin.project.ProjectInfo",
+          "doc" : "Rest.li entry point: /projects/{projectKey}/info\n\ngenerated from: com.linkedin.project.rest.resources.ProjectsInfoResource",
           "collection" : {
             "identifier" : {
               "name" : "infoId",
@@ -260,7 +314,7 @@
               "method" : "get"
             } ],
             "entity" : {
-              "path" : "/corpGroups/{corpGroup}/info/{infoId}"
+              "path" : "/projects/{project}/info/{infoId}"
             }
           }
         }, {
@@ -270,10 +324,10 @@
             }
           },
           "name" : "snapshot",
-          "namespace" : "com.linkedin.identity.corpgroup",
-          "path" : "/corpGroups/{corpGroup}/snapshot",
-          "schema" : "com.linkedin.metadata.snapshot.CorpGroupSnapshot",
-          "doc" : "Rest.li entry point: /corpGroups/{corpGroupKey}/snapshot\n\ngenerated from: com.linkedin.identity.rest.resources.CorpGroupsSnapshot",
+          "namespace" : "com.linkedin.project",
+          "path" : "/projects/{project}/snapshot",
+          "schema" : "com.linkedin.metadata.snapshot.ProjectSnapshot",
+          "doc" : "Rest.li entry point: /projects/{projectKey}/snapshot\n\ngenerated from: com.linkedin.project.rest.resources.ProjectsSnapshot",
           "collection" : {
             "identifier" : {
               "name" : "snapshotId",
@@ -287,7 +341,7 @@
               "method" : "get"
             } ],
             "entity" : {
-              "path" : "/corpGroups/{corpGroup}/snapshot/{snapshotId}"
+              "path" : "/projects/{project}/snapshot/{snapshotId}"
             }
           }
         } ]

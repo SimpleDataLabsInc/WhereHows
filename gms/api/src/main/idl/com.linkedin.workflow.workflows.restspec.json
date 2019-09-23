@@ -1,13 +1,13 @@
 {
-  "name" : "corpGroups",
-  "namespace" : "com.linkedin.identity",
-  "path" : "/corpGroups",
-  "schema" : "com.linkedin.identity.CorpGroup",
-  "doc" : "generated from: com.linkedin.identity.rest.resources.CorpGroups",
+  "name" : "workflows",
+  "namespace" : "com.linkedin.workflow",
+  "path" : "/workflows",
+  "schema" : "com.linkedin.workflow.Workflow",
+  "doc" : "generated from: com.linkedin.workflow.rest.resources.Workflows",
   "collection" : {
     "identifier" : {
-      "name" : "corpGroup",
-      "type" : "com.linkedin.identity.CorpGroupKey",
+      "name" : "workflow",
+      "type" : "com.linkedin.workflow.WorkflowKey",
       "params" : "com.linkedin.restli.common.EmptyRecord"
     },
     "supports" : [ "batch_get", "get" ],
@@ -27,13 +27,13 @@
       } ]
     } ],
     "entity" : {
-      "path" : "/corpGroups/{corpGroup}",
+      "path" : "/workflows/{workflow}",
       "subresources" : [ {
         "name" : "info",
-        "namespace" : "com.linkedin.identity.corpgroup",
-        "path" : "/corpGroups/{corpGroup}/info",
-        "schema" : "com.linkedin.identity.CorpGroupInfo",
-        "doc" : "Rest.li entry point: /corpGroups/{corpGroupKey}/info\n\ngenerated from: com.linkedin.identity.rest.resources.CorpGroupsInfoResource",
+        "namespace" : "com.linkedin.workflow",
+        "path" : "/workflows/{workflow}/info",
+        "schema" : "com.linkedin.workflow.WorkflowInfo",
+        "doc" : "Rest.li entry point: /workflows/{workflowKey}/info\n\ngenerated from: com.linkedin.workflow.rest.resources.WorkflowsInfoResource",
         "collection" : {
           "identifier" : {
             "name" : "infoId",
@@ -46,7 +46,7 @@
             "method" : "get"
           } ],
           "entity" : {
-            "path" : "/corpGroups/{corpGroup}/info/{infoId}"
+            "path" : "/workflows/{workflow}/info/{infoId}"
           }
         }
       }, {
@@ -56,10 +56,10 @@
           }
         },
         "name" : "snapshot",
-        "namespace" : "com.linkedin.identity.corpgroup",
-        "path" : "/corpGroups/{corpGroup}/snapshot",
-        "schema" : "com.linkedin.metadata.snapshot.CorpGroupSnapshot",
-        "doc" : "Rest.li entry point: /corpGroups/{corpGroupKey}/snapshot\n\ngenerated from: com.linkedin.identity.rest.resources.CorpGroupsSnapshot",
+        "namespace" : "com.linkedin.workflow",
+        "path" : "/workflows/{workflow}/snapshot",
+        "schema" : "com.linkedin.metadata.snapshot.WorkflowSnapshot",
+        "doc" : "Rest.li entry point: /workflows/{workflowKey}/snapshot\n\ngenerated from: com.linkedin.workflow.rest.resources.WorkflowsSnapshot",
         "collection" : {
           "identifier" : {
             "name" : "snapshotId",
@@ -73,7 +73,7 @@
             "method" : "get"
           } ],
           "entity" : {
-            "path" : "/corpGroups/{corpGroup}/snapshot/{snapshotId}"
+            "path" : "/workflows/{workflow}/snapshot/{snapshotId}"
           }
         }
       } ]

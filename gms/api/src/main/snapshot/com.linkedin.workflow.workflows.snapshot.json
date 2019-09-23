@@ -1,0 +1,321 @@
+{
+  "models" : [ {
+    "type" : "record",
+    "name" : "Configurations",
+    "namespace" : "com.linkedin.common",
+    "doc" : "Configuration metadata aspect",
+    "fields" : [ {
+      "name" : "configurations",
+      "type" : {
+        "type" : "map",
+        "values" : "string"
+      },
+      "doc" : "A key-value map to capture any other non-standardized properties for the dataset",
+      "default" : { }
+    } ]
+  }, {
+    "type" : "typeref",
+    "name" : "DatasetUrn",
+    "namespace" : "com.linkedin.common",
+    "doc" : "Standardized dataset identifier.",
+    "ref" : "string",
+    "java" : {
+      "coercerClass" : "com.linkedin.common.urn.DatasetUrnCoercer",
+      "class" : "com.linkedin.common.urn.DatasetUrn"
+    },
+    "validate" : {
+      "com.linkedin.common.validator.TypedUrnValidator" : {
+        "accessible" : true,
+        "entityType" : "dataset",
+        "owningTeam" : "urn:li:internalTeam:datahub",
+        "constructable" : true,
+        "name" : "Dataset",
+        "namespace" : "li",
+        "doc" : "Standardized dataset identifier.",
+        "owners" : [ "urn:li:corpuser:fbar", "urn:li:corpuser:bfoo" ],
+        "fields" : [ {
+          "name" : "platform",
+          "doc" : "Standardized platform urn where dataset is defined.",
+          "type" : "com.linkedin.common.urn.DataPlatformUrn"
+        }, {
+          "name" : "datasetName",
+          "doc" : "Dataset native name e.g. <db>.<table>, /dir/subdir/<name>, or <name>",
+          "type" : "string",
+          "maxLength" : 210
+        }, {
+          "name" : "origin",
+          "doc" : "Fabric type where dataset belongs to or where it was generated.",
+          "type" : "com.linkedin.common.FabricType"
+        } ],
+        "maxLength" : 284
+      }
+    }
+  }, {
+    "type" : "typeref",
+    "name" : "WorkflowUrn",
+    "namespace" : "com.linkedin.common",
+    "doc" : "Workflow URN",
+    "ref" : "string",
+    "java" : {
+      "coercerClass" : "com.linkedin.common.urn.WorkflowUrnCoercer",
+      "class" : "com.linkedin.common.urn.WorkflowUrn"
+    },
+    "validate" : {
+      "com.linkedin.common.validator.TypedUrnValidator" : {
+        "accessible" : true,
+        "entityType" : "workflow",
+        "constructable" : true,
+        "name" : "Workflow",
+        "namespace" : "li",
+        "doc" : "Workflow Urn",
+        "owners" : "urn:li:corpgroup:fbar",
+        "fields" : [ {
+          "name" : "name",
+          "doc" : "Name of the workflow",
+          "type" : "string",
+          "maxLength" : 20
+        } ],
+        "maxLength" : 36
+      }
+    }
+  }, {
+    "type" : "record",
+    "name" : "AspectVersion",
+    "namespace" : "com.linkedin.metadata.aspect",
+    "doc" : "A tuple of a specific metadata aspect and its version.",
+    "fields" : [ {
+      "name" : "aspect",
+      "type" : "string",
+      "doc" : "The FQCN of the metadata aspect, e.g. com.linkedin.common.Ownership"
+    }, {
+      "name" : "version",
+      "type" : "long",
+      "doc" : "The version of the metadata aspect"
+    } ]
+  }, {
+    "type" : "typeref",
+    "name" : "WorkflowAspect",
+    "namespace" : "com.linkedin.metadata.aspect",
+    "doc" : "A union of all supported metadata aspects for a Workflow",
+    "ref" : [ {
+      "type" : "record",
+      "name" : "WorkflowInfo",
+      "namespace" : "com.linkedin.workflow",
+      "doc" : "Workflow information",
+      "fields" : [ {
+        "name" : "name",
+        "type" : "string",
+        "doc" : "Name of the workflow"
+      }, {
+        "name" : "description",
+        "type" : "string",
+        "doc" : "Description of the workflow",
+        "optional" : true
+      }, {
+        "name" : "project",
+        "type" : "com.linkedin.common.DatasetUrn",
+        "doc" : "Project this workflow is part of"
+      }, {
+        "name" : "versions",
+        "type" : {
+          "type" : "array",
+          "items" : {
+            "type" : "record",
+            "name" : "WorkflowVersion",
+            "doc" : "Workflow version",
+            "fields" : [ {
+              "name" : "id",
+              "type" : "long",
+              "doc" : "Version id"
+            }, {
+              "name" : "commitId",
+              "type" : "string",
+              "doc" : "Commit id"
+            }, {
+              "name" : "commitMessage",
+              "type" : "string",
+              "doc" : "Commit message"
+            } ]
+          }
+        },
+        "default" : [ ],
+        "optional" : true
+      }, {
+        "name" : "inputDatasets",
+        "type" : {
+          "type" : "array",
+          "items" : "com.linkedin.common.DatasetUrn"
+        },
+        "doc" : "List of datasets used in this workflow",
+        "default" : [ ],
+        "optional" : true
+      }, {
+        "name" : "outputDatasets",
+        "type" : {
+          "type" : "array",
+          "items" : "com.linkedin.common.DatasetUrn"
+        },
+        "doc" : "List of datasets created in this workflow",
+        "default" : [ ],
+        "optional" : true
+      }, {
+        "name" : "configurations",
+        "type" : "com.linkedin.common.Configurations",
+        "doc" : "workflow configurations",
+        "optional" : true
+      } ]
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "SnapshotKey",
+    "namespace" : "com.linkedin.metadata.snapshot",
+    "doc" : "The Key for a metadata Snapshot.",
+    "fields" : [ {
+      "name" : "aspectVersions",
+      "type" : {
+        "type" : "array",
+        "items" : "com.linkedin.metadata.aspect.AspectVersion"
+      },
+      "doc" : "A list of metadata aspects in the Snapshot and their versions"
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "WorkflowSnapshot",
+    "namespace" : "com.linkedin.metadata.snapshot",
+    "doc" : "A metadata snapshot for a specific Workflow entity.",
+    "fields" : [ {
+      "name" : "urn",
+      "type" : "com.linkedin.common.WorkflowUrn",
+      "doc" : "URN for the entity the metadata snapshot is associated with."
+    }, {
+      "name" : "aspects",
+      "type" : {
+        "type" : "array",
+        "items" : "com.linkedin.metadata.aspect.WorkflowAspect"
+      },
+      "doc" : "The list of metadata aspects associated with the Workflow. Depending on the use case, this can either be all, or a selection, of supported aspects."
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "EmptyRecord",
+    "namespace" : "com.linkedin.restli.common",
+    "doc" : "An literally empty record.  Intended as a marker to indicate the absence of content where a record type is required.  If used the underlying DataMap *must* be empty, EmptyRecordValidator is provided to help enforce this.  For example,  CreateRequest extends Request<EmptyRecord> to indicate it has no response body.   Also, a ComplexKeyResource implementation that has no ParamKey should have a signature like XyzResource implements ComplexKeyResource<XyzKey, EmptyRecord, Xyz>.",
+    "fields" : [ ],
+    "validate" : {
+      "com.linkedin.restli.common.EmptyRecordValidator" : { }
+    }
+  }, {
+    "type" : "record",
+    "name" : "Workflow",
+    "namespace" : "com.linkedin.workflow",
+    "doc" : "Metadata for a workflow",
+    "fields" : [ {
+      "name" : "name",
+      "type" : "string",
+      "doc" : "Name of the workflow"
+    }, {
+      "name" : "info",
+      "type" : "WorkflowInfo",
+      "doc" : "Information of the workflow",
+      "optional" : true
+    } ]
+  }, "com.linkedin.workflow.WorkflowInfo", {
+    "type" : "record",
+    "name" : "WorkflowKey",
+    "namespace" : "com.linkedin.workflow",
+    "doc" : "Key for workflow resource",
+    "fields" : [ {
+      "name" : "name",
+      "type" : "string",
+      "doc" : "Name of workflow",
+      "validate" : {
+        "strlen" : {
+          "min" : 1,
+          "max" : 20
+        }
+      }
+    } ]
+  }, "com.linkedin.workflow.WorkflowVersion" ],
+  "schema" : {
+    "name" : "workflows",
+    "namespace" : "com.linkedin.workflow",
+    "path" : "/workflows",
+    "schema" : "com.linkedin.workflow.Workflow",
+    "doc" : "generated from: com.linkedin.workflow.rest.resources.Workflows",
+    "collection" : {
+      "identifier" : {
+        "name" : "workflow",
+        "type" : "com.linkedin.workflow.WorkflowKey",
+        "params" : "com.linkedin.restli.common.EmptyRecord"
+      },
+      "supports" : [ "batch_get", "get" ],
+      "methods" : [ {
+        "method" : "get",
+        "parameters" : [ {
+          "name" : "aspects",
+          "type" : "{ \"type\" : \"array\", \"items\" : \"string\" }",
+          "default" : "[]"
+        } ]
+      }, {
+        "method" : "batch_get",
+        "parameters" : [ {
+          "name" : "aspects",
+          "type" : "{ \"type\" : \"array\", \"items\" : \"string\" }",
+          "default" : "[]"
+        } ]
+      } ],
+      "entity" : {
+        "path" : "/workflows/{workflow}",
+        "subresources" : [ {
+          "name" : "info",
+          "namespace" : "com.linkedin.workflow",
+          "path" : "/workflows/{workflow}/info",
+          "schema" : "com.linkedin.workflow.WorkflowInfo",
+          "doc" : "Rest.li entry point: /workflows/{workflowKey}/info\n\ngenerated from: com.linkedin.workflow.rest.resources.WorkflowsInfoResource",
+          "collection" : {
+            "identifier" : {
+              "name" : "infoId",
+              "type" : "long"
+            },
+            "supports" : [ "create", "get" ],
+            "methods" : [ {
+              "method" : "create"
+            }, {
+              "method" : "get"
+            } ],
+            "entity" : {
+              "path" : "/workflows/{workflow}/info/{infoId}"
+            }
+          }
+        }, {
+          "annotations" : {
+            "createOnly" : {
+              "value" : [ "urn" ]
+            }
+          },
+          "name" : "snapshot",
+          "namespace" : "com.linkedin.workflow",
+          "path" : "/workflows/{workflow}/snapshot",
+          "schema" : "com.linkedin.metadata.snapshot.WorkflowSnapshot",
+          "doc" : "Rest.li entry point: /workflows/{workflowKey}/snapshot\n\ngenerated from: com.linkedin.workflow.rest.resources.WorkflowsSnapshot",
+          "collection" : {
+            "identifier" : {
+              "name" : "snapshotId",
+              "type" : "com.linkedin.metadata.snapshot.SnapshotKey",
+              "params" : "com.linkedin.restli.common.EmptyRecord"
+            },
+            "supports" : [ "create", "get" ],
+            "methods" : [ {
+              "method" : "create"
+            }, {
+              "method" : "get"
+            } ],
+            "entity" : {
+              "path" : "/workflows/{workflow}/snapshot/{snapshotId}"
+            }
+          }
+        } ]
+      }
+    }
+  }
+}

@@ -27,7 +27,7 @@ import javax.inject.Named;
  * Rest.li entry point: /workflows/{workflowKey}/snapshot
  */
 @Slf4j
-@RestLiCollection(name = "snapshot", namespace = "com.linkedin.project", parent = Workflows.class)
+@RestLiCollection(name = "snapshot", namespace = "com.linkedin.workflow", parent = Workflows.class)
 @CreateOnly({"urn"})
 public class WorkflowsSnapshot extends BaseSnapshotResource<WorkflowUrn, WorkflowSnapshot, WorkflowAspect> {
 
