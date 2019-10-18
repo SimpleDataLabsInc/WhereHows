@@ -1,0 +1,18 @@
+{
+  "type": "record",
+  "name": "HiveConfKeyValue",
+  "namespace": "hive.metastore.sdl",
+  "doc": "Hive Conf Key Value Entity",
+  "fields": [
+    {
+      "name": "key",
+      "doc": "Key associated with the record",
+      "type": "string"
+    },
+    {
+        "name": "value",
+        "doc": "Value Associated with the record",
+        "type": "string"
+    }
+  ]
+}

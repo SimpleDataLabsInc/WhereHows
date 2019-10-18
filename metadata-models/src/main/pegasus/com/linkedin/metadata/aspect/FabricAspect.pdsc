@@ -1,0 +1,10 @@
+{
+  "type": "typeref",
+  "name": "FabricAspect",
+  "namespace": "com.linkedin.metadata.aspect",
+  "doc": "A union of all supported metadata aspects for a Environment",
+  "ref": [
+    "com.linkedin.common.Ownership",
+    "hive.metastore.sdl.HiveMetastore"
+  ]
+}

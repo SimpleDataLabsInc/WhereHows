@@ -943,16 +943,6 @@
         "doc" : "Map captures all the references schema makes to external datasets. Map key is ForeignKeySpecName typeref.",
         "optional" : true
       } ]
-    }, {
-      "type" : "record",
-      "name" : "HiveMetastore",
-      "namespace" : "hive.metastore.sdl",
-      "doc" : "Metastore corresponding to a record of Hive Metastore.",
-      "fields" : [ {
-        "name" : "description",
-        "type" : "string",
-        "doc" : "Description of the link."
-      } ]
     } ]
   }, {
     "type" : "record",
@@ -1159,7 +1149,34 @@
     "validate" : {
       "com.linkedin.restli.common.EmptyRecordValidator" : { }
     }
-  }, "com.linkedin.schema.ArrayType", "com.linkedin.schema.BinaryJsonSchema", "com.linkedin.schema.BooleanType", "com.linkedin.schema.BytesType", "com.linkedin.schema.DatasetFieldForeignKey", "com.linkedin.schema.EnumType", "com.linkedin.schema.EspressoSchema", "com.linkedin.schema.FixedType", "com.linkedin.schema.ForeignKeySpec", "com.linkedin.schema.KafkaSchema", "com.linkedin.schema.KeyValueSchema", "com.linkedin.schema.MapType", "com.linkedin.schema.MySqlDDL", "com.linkedin.schema.NullType", "com.linkedin.schema.NumberType", "com.linkedin.schema.OracleDDL", "com.linkedin.schema.OrcSchema", "com.linkedin.schema.OtherSchema", "com.linkedin.schema.PrestoDDL", "com.linkedin.schema.RecordType", "com.linkedin.schema.SchemaField", "com.linkedin.schema.SchemaFieldDataType", "com.linkedin.schema.SchemaMetadata", "com.linkedin.schema.SchemaMetadataKey", "com.linkedin.schema.Schemaless", "com.linkedin.schema.StringType", "com.linkedin.schema.UnionType", "com.linkedin.schema.UrnForeignKey", "hive.metastore.sdl.HiveMetastore" ],
+  }, "com.linkedin.schema.ArrayType", "com.linkedin.schema.BinaryJsonSchema", "com.linkedin.schema.BooleanType", "com.linkedin.schema.BytesType", "com.linkedin.schema.DatasetFieldForeignKey", "com.linkedin.schema.EnumType", "com.linkedin.schema.EspressoSchema", "com.linkedin.schema.FixedType", "com.linkedin.schema.ForeignKeySpec", "com.linkedin.schema.KafkaSchema", "com.linkedin.schema.KeyValueSchema", "com.linkedin.schema.MapType", "com.linkedin.schema.MySqlDDL", "com.linkedin.schema.NullType", "com.linkedin.schema.NumberType", "com.linkedin.schema.OracleDDL", "com.linkedin.schema.OrcSchema", "com.linkedin.schema.OtherSchema", "com.linkedin.schema.PrestoDDL", "com.linkedin.schema.RecordType", "com.linkedin.schema.SchemaField", "com.linkedin.schema.SchemaFieldDataType", "com.linkedin.schema.SchemaMetadata", "com.linkedin.schema.SchemaMetadataKey", "com.linkedin.schema.Schemaless", "com.linkedin.schema.StringType", "com.linkedin.schema.UnionType", "com.linkedin.schema.UrnForeignKey", {
+    "type" : "record",
+    "name" : "HiveConfKeyValue",
+    "namespace" : "hive.metastore.sdl",
+    "doc" : "Hive Conf Key Value Entity",
+    "fields" : [ {
+      "name" : "key",
+      "type" : "string",
+      "doc" : "Key associated with the record"
+    }, {
+      "name" : "value",
+      "type" : "string",
+      "doc" : "Value Associated with the record"
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "HiveMetastore",
+    "namespace" : "hive.metastore.sdl",
+    "doc" : "Metastore corresponding to a record of Hive Metastore.",
+    "fields" : [ {
+      "name" : "hiveConf",
+      "type" : {
+        "type" : "array",
+        "items" : "HiveConfKeyValue"
+      },
+      "doc" : "HiveConf as Key Value Pairs"
+    } ]
+  } ],
   "schema" : {
     "name" : "datasets",
     "namespace" : "com.linkedin.dataset",

@@ -16,10 +16,10 @@ public final class DatasetUrn extends Urn {
 
   private final String datasetNameEntity;
 
-  private final FabricType originEntity;
+  private final FabricUrn originEntity;
 
-  public DatasetUrn(DataPlatformUrn platform, String name, FabricType origin) {
-    super(ENTITY_TYPE, String.format(CONTENT_FORMAT, platform.toString(), name, origin.name()));
+  public DatasetUrn(DataPlatformUrn platform, String name, FabricUrn origin) {
+    super(ENTITY_TYPE, String.format(CONTENT_FORMAT, platform.toString(), name, origin.toString()));
     this.platformEntity = platform;
     this.datasetNameEntity = name;
     this.originEntity = origin;
@@ -33,13 +33,13 @@ public final class DatasetUrn extends Urn {
     return datasetNameEntity;
   }
 
-  public FabricType getOriginEntity() {
+  public FabricUrn getOriginEntity() {
     return originEntity;
   }
 
   public static DatasetUrn createFromString(String rawUrn) throws URISyntaxException {
     String content = new Urn(rawUrn).getContent();
     String[] parts = content.substring(1, content.length()-1).split(",");
-    return new DatasetUrn(DataPlatformUrn.createFromString(parts[0]), parts[1], toFabricType(parts[2]));
+    return new DatasetUrn(DataPlatformUrn.createFromString(parts[0]), parts[1], FabricUrn.createFromString(parts[2]));
   }
 }

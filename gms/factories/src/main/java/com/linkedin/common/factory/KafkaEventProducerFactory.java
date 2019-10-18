@@ -30,6 +30,6 @@ public class KafkaEventProducerFactory {
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName());
     props.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, kafkaSchemaRegistryUrl);
 
-    return new KafkaProducer(props);
+    return new KafkaProducer<>(props);
   }
 }
